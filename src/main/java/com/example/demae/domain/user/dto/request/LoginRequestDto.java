@@ -1,4 +1,4 @@
-package com.example.demae.domain.user.dto;
+package com.example.demae.domain.user.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
