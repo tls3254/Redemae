@@ -30,8 +30,8 @@ public class StoreControllerPage {
 
     @GetMapping
     public String findStores(@RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "10") int size,
-                               Model model){
+                             @RequestParam(defaultValue = "10") int size,
+                             Model model){
         Page<StoreResponseDto> stores = storeService.findStoreAll(page, size);
         model.addAttribute("storePages", stores);
         return "store/showAllStorePage";
