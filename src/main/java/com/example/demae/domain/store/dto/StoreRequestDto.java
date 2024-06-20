@@ -16,5 +16,4 @@ public class StoreRequestDto {
 
 	@NotBlank
 	private String storeCategory;
-//	List<MultipartFile> files;
 }
