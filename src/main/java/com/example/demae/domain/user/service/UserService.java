@@ -1,6 +1,6 @@
 package com.example.demae.domain.user.service;
 
-import com.example.demae.domain.user.dto.SignupRequestDto;
+import com.example.demae.domain.user.dto.request.SignupRequestDto;
 import com.example.demae.domain.user.entity.User;
 import com.example.demae.domain.user.entity.UserRoleEnum;
 import com.example.demae.domain.user.repository.UserRepository;

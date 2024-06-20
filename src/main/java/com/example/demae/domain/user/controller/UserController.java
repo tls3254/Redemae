@@ -1,6 +1,6 @@
 package com.example.demae.domain.user.controller;
 
-import com.example.demae.domain.user.dto.SignupRequestDto;
+import com.example.demae.domain.user.dto.request.SignupRequestDto;
 import com.example.demae.domain.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
