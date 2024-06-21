@@ -1,8 +1,8 @@
 package com.example.demae.domain.store.service;
 
-import com.example.demae.domain.store.dto.StoreRequestDto;
-import com.example.demae.domain.store.dto.StoreResponseDto;
-import com.example.demae.domain.store.dto.StoreUpdateRequestDto;
+import com.example.demae.domain.store.dto.request.StoreRequestDto;
+import com.example.demae.domain.store.dto.response.StoreResponseDto;
+import com.example.demae.domain.store.dto.request.StoreModifyRequestDto;
 import com.example.demae.domain.store.entity.Store;
 import com.example.demae.domain.store.repository.StoreRepository;
 import com.example.demae.domain.user.entity.User;
@@ -32,7 +32,7 @@ public class StoreService {
 		storeRepository.save(store);
 	}
 
-	public void modifyStore(Long storeId, String userEmail, StoreUpdateRequestDto storeRequestDto) {
+	public void modifyStore(Long storeId, String userEmail, StoreModifyRequestDto storeRequestDto) {
 		Store store = findStore(storeId);
 		storeCheck(store, userEmail);
 		store.update(storeRequestDto);
@@ -46,7 +46,7 @@ public class StoreService {
 
 	@Transactional(readOnly = true)
 	public Page<StoreResponseDto> findStoreAll(int page, int size) {
-		Page<Store> stores = storeRepository.findAll(PageRequest.of(page, size));
+		Page<Store> stores = storeRepository.findStoreAll(PageRequest.of(page, size));
 		return stores.map(StoreResponseDto::new);
 	}
 
