@@ -1,7 +1,7 @@
 package com.example.demae.domain.store.entity;
 
-import com.example.demae.domain.store.dto.StoreRequestDto;
-import com.example.demae.domain.store.dto.StoreUpdateRequestDto;
+import com.example.demae.domain.store.dto.request.StoreRequestDto;
+import com.example.demae.domain.store.dto.request.StoreModifyRequestDto;
 import com.example.demae.domain.user.entity.User;
 import com.example.demae.domain.menu.entity.Menu;
 import com.example.demae.global.audit.Auditable;
@@ -45,7 +45,7 @@ public class Store extends Auditable {
         this.user = user;
     }
 
-    public void update(StoreUpdateRequestDto storeRequestDto) {
+    public void update(StoreModifyRequestDto storeRequestDto) {
         this.storeName = storeRequestDto.getStoreName();
         this.storeAddress = storeRequestDto.getStoreAddress();
         this.storeCategory = storeRequestDto.getStoreCategory();

@@ -1,7 +1,7 @@
 package com.example.demae.domain.store.controller;
 
-import com.example.demae.domain.store.dto.StoreRequestDto;
-import com.example.demae.domain.store.dto.StoreUpdateRequestDto;
+import com.example.demae.domain.store.dto.request.StoreRequestDto;
+import com.example.demae.domain.store.dto.request.StoreModifyRequestDto;
 import com.example.demae.domain.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class StoreController {
 
 	@PatchMapping("/{storeId}")
 	public ResponseEntity<String> modifyStore(@PathVariable Long storeId,
-											  @RequestBody StoreUpdateRequestDto storeRequestDto,
+											  @RequestBody StoreModifyRequestDto storeRequestDto,
 											  @AuthenticationPrincipal UserDetails userDetails){
 		storeService.modifyStore(storeId, userDetails.getUsername(), storeRequestDto);
 		return ResponseEntity.ok("ok");

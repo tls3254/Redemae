@@ -1,6 +1,6 @@
 package com.example.demae.domain.store.controller;
 
-import com.example.demae.domain.store.dto.StoreResponseDto;
+import com.example.demae.domain.store.dto.response.StoreResponseDto;
 import com.example.demae.domain.store.service.StoreService;
 import com.example.demae.domain.user.entity.User;
 import com.example.demae.domain.user.service.UserService;

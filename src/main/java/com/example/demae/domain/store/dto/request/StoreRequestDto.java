@@ -1,4 +1,4 @@
-package com.example.demae.domain.store.dto;
+package com.example.demae.domain.store.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

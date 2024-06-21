@@ -1,4 +1,4 @@
-package com.example.demae.domain.store.dto;
+package com.example.demae.domain.store.dto.response;
 
 import com.example.demae.domain.store.entity.Store;
 import lombok.Getter;
