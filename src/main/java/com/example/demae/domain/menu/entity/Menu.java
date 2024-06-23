@@ -1,5 +1,6 @@
 package com.example.demae.domain.menu.entity;
 
+import com.example.demae.domain.menu.dto.request.MenuModifyRequestDto;
 import com.example.demae.domain.menu.dto.request.MenuRequestDto;
 import com.example.demae.domain.store.entity.Store;
 import com.example.demae.global.audit.Auditable;
@@ -32,7 +33,7 @@ public class Menu extends Auditable {
         this.store = store;
     }
 
-    public void update(MenuRequestDto menuRequestDto) {
+    public void update(MenuModifyRequestDto menuRequestDto) {
         this.menuName = menuRequestDto.getMenuName();
         this.menuPrice = menuRequestDto.getMenuPrice();
     }

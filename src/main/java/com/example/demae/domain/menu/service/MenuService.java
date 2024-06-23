@@ -1,5 +1,6 @@
 package com.example.demae.domain.menu.service;
 
+import com.example.demae.domain.menu.dto.request.MenuModifyRequestDto;
 import com.example.demae.domain.menu.dto.request.MenuRequestDto;
 import com.example.demae.domain.menu.dto.response.MenuResponseDto;
 import com.example.demae.domain.menu.entity.Menu;
@@ -28,7 +29,7 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
-    public void modifyMenu(Long storeId,Long menuId,MenuRequestDto menuRequestDto,String email) {
+    public void modifyMenu(Long storeId, Long menuId, MenuModifyRequestDto menuRequestDto, String email) {
         Store store = storeService.findStore(storeId);
         Menu menu = findMenuAndStore(storeId,menuId);
         checkStoreOwner(store, email);

@@ -1,5 +1,6 @@
 package com.example.demae.domain.menu.controller;
 
+import com.example.demae.domain.menu.dto.request.MenuModifyRequestDto;
 import com.example.demae.domain.menu.dto.request.MenuRequestDto;
 import com.example.demae.domain.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class MenuController {
     @PatchMapping("/{storeId}/patchMenu/{menuId}")
     public ResponseEntity<String> modifyMenu(@PathVariable Long storeId,
                                             @PathVariable Long menuId,
-                                            @RequestBody MenuRequestDto menuRequestDto,
+                                            @RequestBody MenuModifyRequestDto menuRequestDto,
                                             @AuthenticationPrincipal UserDetails userDetails){
         menuService.modifyMenu(storeId,menuId,menuRequestDto,userDetails.getUsername());
         return ResponseEntity.ok("ok");
