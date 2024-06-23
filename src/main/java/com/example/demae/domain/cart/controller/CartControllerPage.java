@@ -30,8 +30,8 @@ public class CartControllerPage {
 	public String getAllOrder(@AuthenticationPrincipal UserDetails userDetails,
 							  Model model) {
 		User user = userService.findUser(userDetails.getUsername());
-		List<OrderAllResponseDto> order = cartService.getAllOrderInfo(userDetails.getUsername());
-		model.addAttribute("orderAll",order);
+		List<OrderAllResponseDto> cart = cartService.getAllOrderInfo(userDetails.getUsername());
+		model.addAttribute("cartAll", cart);
 		if(user.getUserRole().toString().equals("USER")) {
 			return "order/orderAllInfoPageUser";
 		}
@@ -39,19 +39,20 @@ public class CartControllerPage {
 	}
 
 	@GetMapping("/orderItem")
-	public String getOrder(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+	public String getOrder(@AuthenticationPrincipal UserDetails userDetails,
+						   Model model) {
 		User user = userService.findUser(userDetails.getUsername());
 		CartListResponseDto cart = cartService.getCart(user.getUserId());
 		model.addAttribute("cartList", cart);
 		return "order/cart";
 	}
 
-	@GetMapping("/{orderId}")
-	public String getOrder(@PathVariable Long orderId,
+	@GetMapping("/{cartId}")
+	public String getOrder(@PathVariable Long cartId,
 						   @AuthenticationPrincipal UserDetails userDetails,
 						   Model model) {
-		OrderResponseDto order = cartService.getCartOne(orderId, userDetails.getUsername());
-		model.addAttribute("order", order);
+		OrderResponseDto cart = cartService.getCartOne(cartId, userDetails.getUsername());
+		model.addAttribute("cart", cart);
 		return "order/orderInfoPage";
 	}
 }
