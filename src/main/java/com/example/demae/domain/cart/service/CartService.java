@@ -122,11 +122,11 @@ public class CartService {
 		throw new IllegalStateException("본인 주문 정보만 조회가 가능합니다.");
 	}
 
-	public Cart completeOrder(Long orderId, String userEmail) {
+	public Cart completeOrder(Long cartId, String userEmail) {
 		User user = userService.findUser(userEmail);
-		Cart findOrder = cartRepository.findById(orderId).orElseThrow();
+		Cart findOrder = cartRepository.findById(cartId).orElseThrow();
 		if (user.getStore() != null && user.getStore().getStoreId().equals(findOrder.getOrderItems().get(0).getStore().getStoreId()))  {
-			return cartRepository.findById(orderId).orElseThrow();
+			return cartRepository.findById(cartId).orElseThrow();
 		}
 		return null;
 	}
