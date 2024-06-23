@@ -1,6 +1,6 @@
 package com.example.demae.domain.menu.controller;
 
-import com.example.demae.domain.menu.dto.MenuResponseDto;
+import com.example.demae.domain.menu.dto.response.MenuResponseDto;
 import com.example.demae.domain.menu.service.MenuService;
 import com.example.demae.domain.user.entity.User;
 import com.example.demae.domain.user.service.UserService;
@@ -24,7 +24,8 @@ public class MenuControllerPage {
     private final UserService userService;
 
     @GetMapping("/join")
-    public String menuCreatePage(Model model, @PathVariable Long storeId){
+    public String menuCreatePage(@PathVariable Long storeId,
+                                 Model model){
         model.addAttribute("storeId", storeId);
         return "menu/menu";
     }

@@ -1,4 +1,4 @@
-package com.example.demae.domain.menu.dto;
+package com.example.demae.domain.menu.dto.response;
 
 import com.example.demae.domain.menu.entity.Menu;
 import lombok.Getter;

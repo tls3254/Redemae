@@ -1,6 +1,6 @@
 package com.example.demae.domain.menu.entity;
 
-import com.example.demae.domain.menu.dto.MenuRequestDto;
+import com.example.demae.domain.menu.dto.request.MenuRequestDto;
 import com.example.demae.domain.store.entity.Store;
 import com.example.demae.global.audit.Auditable;
 import jakarta.persistence.*;

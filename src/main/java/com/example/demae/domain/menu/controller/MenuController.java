@@ -1,6 +1,6 @@
 package com.example.demae.domain.menu.controller;
 
-import com.example.demae.domain.menu.dto.MenuRequestDto;
+import com.example.demae.domain.menu.dto.request.MenuRequestDto;
 import com.example.demae.domain.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +19,16 @@ public class MenuController {
     public ResponseEntity<String> createMenu(@PathVariable Long storeId,
                                              @RequestBody MenuRequestDto menuRequestDto,
                                              @AuthenticationPrincipal UserDetails userDetails){
-        String email = userDetails.getUsername();
-        menuService.createMenu(menuRequestDto, storeId, email);
+        menuService.createMenu(menuRequestDto, storeId, userDetails.getUsername());
         return ResponseEntity.ok("ok");
     }
 
     @PatchMapping("/{storeId}/patchMenu/{menuId}")
-    public ResponseEntity<String> patchMemu(@PathVariable Long storeId,
+    public ResponseEntity<String> modifyMenu(@PathVariable Long storeId,
                                             @PathVariable Long menuId,
                                             @RequestBody MenuRequestDto menuRequestDto,
                                             @AuthenticationPrincipal UserDetails userDetails){
-        String email = userDetails.getUsername();
-        menuService.patchMenu(storeId,menuId,menuRequestDto,email);
+        menuService.modifyMenu(storeId,menuId,menuRequestDto,userDetails.getUsername());
         return ResponseEntity.ok("ok");
     }
 
@@ -38,8 +36,7 @@ public class MenuController {
     public ResponseEntity<String> deleteMenu(@PathVariable Long storeId,
                                              @PathVariable Long menuId,
                                              @AuthenticationPrincipal UserDetails userDetails){
-        String email = userDetails.getUsername();
-        menuService.deleteMenu(storeId,menuId,email);
+        menuService.deleteMenu(storeId,menuId,userDetails.getUsername());
         return ResponseEntity.ok("ok");
     }
 }
