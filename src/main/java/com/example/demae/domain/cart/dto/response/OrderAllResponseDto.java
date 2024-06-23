@@ -10,16 +10,17 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class OrderAllResponseDto {
-	private Long id;
+	private Long cartId;
 	private Long userId;
 	private LocalDateTime date;
 	private CartState state;
 	private int totalPrice;
 
 	public OrderAllResponseDto(Cart cart) {
-		this.id = cart.getCartId();
+		this.cartId = cart.getCartId();
 		this.userId = cart.getUser().getUserId();
 		this.date = cart.getModifiedAt();
 		this.state = cart.getCartState();
+		this.totalPrice = cart.getTotalPrice();
 	}
 }
