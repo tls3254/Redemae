@@ -46,7 +46,7 @@ public class StoreService {
 
 	@Transactional(readOnly = true)
 	public Page<StoreResponseDto> findStoreAll(int page, int size) {
-		Page<Store> stores = storeRepository.findStoreAll(PageRequest.of(page, size));
+		Page<Store> stores = storeRepository.findAll(PageRequest.of(page, size));
 		return stores.map(StoreResponseDto::new);
 	}
 
