@@ -28,7 +28,7 @@ public class SignupRequestDto {
     @NotBlank
     private String userAddress;
 
-    private String admin;
+    private String userRole = "";
 
     private String adminToken = "";
 }

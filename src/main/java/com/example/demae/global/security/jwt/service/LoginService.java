@@ -22,7 +22,7 @@ public class LoginService implements UserDetailsService {
         return User.builder()
                 .username(user.getUserEmail())
                 .password(user.getUserPassword())
-                .authorities(user.getUserRole().getAuthority())
+                .authorities(user.getUserRole().name())
                 .build();
     }
 }

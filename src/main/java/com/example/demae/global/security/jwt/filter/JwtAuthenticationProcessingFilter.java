@@ -72,7 +72,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
         String realToken = jwtService.substringToken(newAccessToken);
         if (realToken != null && jwtService.isTokenValid(realToken)) {
-            jwtService.extractEmail(realToken).flatMap(userRepository::findByUserEmail).ifPresent(this::saveAuthentication);
+            jwtService.extractEmail(realToken)
+                    .ifPresent(email -> userRepository.findByUserEmail(email)
+                            .ifPresent(this::saveAuthentication));
         }
 
         filterChain.doFilter(request, response);
@@ -93,7 +95,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
         accessToken = jwtService.substringToken(accessToken);
         if (accessToken != null && jwtService.isTokenValid(accessToken)) {
-            jwtService.extractEmail(accessToken).flatMap(userRepository::findByUserEmail).ifPresent(this::saveAuthentication);
+            jwtService.extractEmail(accessToken)
+                    .ifPresent(email -> userRepository.findByUserEmail(email)
+                            .ifPresent(this::saveAuthentication));
         }
 
         filterChain.doFilter(request, response);

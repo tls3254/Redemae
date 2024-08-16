@@ -25,7 +25,7 @@ public class UserService {
         String password = passwordEncoder.encode(requestDto.getUserPassword());
 
         UserRoleEnum role = UserRoleEnum.USER;
-        if(requestDto.getAdmin().equals("admin") && requestDto.getAdminToken().equals(ADMIN_TOKEN)){
+        if(requestDto.getUserRole().equals("admin") && requestDto.getAdminToken().equals(ADMIN_TOKEN)){
             role = UserRoleEnum.ADMIN;
         }
         User user = new User(requestDto,role,password);
