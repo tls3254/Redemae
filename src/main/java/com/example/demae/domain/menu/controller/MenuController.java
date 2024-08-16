@@ -24,7 +24,7 @@ public class MenuController {
         return ResponseEntity.ok("ok");
     }
 
-    @PatchMapping("/{storeId}/patchMenu/{menuId}")
+    @PatchMapping("/{storeId}/menus/{menuId}")
     public ResponseEntity<String> modifyMenu(@PathVariable Long storeId,
                                             @PathVariable Long menuId,
                                             @RequestBody MenuModifyRequestDto menuRequestDto,
@@ -33,7 +33,7 @@ public class MenuController {
         return ResponseEntity.ok("ok");
     }
 
-    @DeleteMapping("/{storeId}/deleteMenu/{menuId}")
+    @DeleteMapping("/{storeId}/menus/{menuId}")
     public ResponseEntity<String> deleteMenu(@PathVariable Long storeId,
                                              @PathVariable Long menuId,
                                              @AuthenticationPrincipal UserDetails userDetails){
