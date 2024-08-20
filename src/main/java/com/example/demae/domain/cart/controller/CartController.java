@@ -1,7 +1,7 @@
 package com.example.demae.domain.cart.controller;
 
-import com.example.demae.domain.cart.dto.request.CartRequestDto;
-import com.example.demae.domain.cart.dto.request.OrderRequestDto;
+import com.example.demae.domain.cart.dto.request.DeleteCartRequestDto;
+import com.example.demae.domain.cart.dto.request.CreateCartRequestDto;
 import com.example.demae.domain.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +17,24 @@ public class CartController {
 	private final CartService cartService;
 
 	@PostMapping
-	public ResponseEntity<String> createCart(@RequestBody OrderRequestDto orderRequestDto,
-										      @AuthenticationPrincipal UserDetails userDetails) {
-		cartService.createCart(orderRequestDto, userDetails.getUsername());
+	public ResponseEntity<String> createCartAndOrderItem(
+												@RequestBody CreateCartRequestDto orderRequestDto,
+										        @AuthenticationPrincipal UserDetails userDetails) {
+		cartService.createCartAndOrderItem(orderRequestDto, userDetails.getUsername());
 		return ResponseEntity.ok("ok");
 	}
 
-	@PostMapping("/confirm")
-	public ResponseEntity<String> shoppingCart(@RequestBody CartRequestDto cartRequestDto,
-										        @AuthenticationPrincipal UserDetails userDetails) {
-		cartService.addOrderItem(cartRequestDto, userDetails.getUsername());
-		return ResponseEntity.ok("ok");
-	}
+//	@DeleteMapping("/value/{cartId}")
+//	public ResponseEntity<String> deleteOrderItem(@PathVariable Long cartId,
+//												 @RequestBody DeleteCartRequestDto cartRequestDto,
+//										         @AuthenticationPrincipal UserDetails userDetails) {
+//		cartService.deleteOrderItem(cartId, cartRequestDto, userDetails.getUsername());
+//		return ResponseEntity.ok("ok");
+//	}
 
 	@DeleteMapping("/{cartId}")
 	public ResponseEntity<String> deleteCart(@PathVariable Long cartId,
-											  @AuthenticationPrincipal UserDetails userDetails) {
+											 @AuthenticationPrincipal UserDetails userDetails) {
 		cartService.deleteCart(cartId, userDetails.getUsername());
 		return ResponseEntity.ok("ok");
 	}

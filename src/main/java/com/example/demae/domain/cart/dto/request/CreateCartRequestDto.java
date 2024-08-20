@@ -5,10 +5,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class OrderRequestDto {
-	private Long userId;
+public class CreateCartRequestDto {
 	private int orderItemPrice;
 	private int orderItemQuantity;
 	private Long storeId;
-	private Long MenuId;
+	private Long menuId;
 }

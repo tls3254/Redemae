@@ -1,7 +1,6 @@
 package com.example.demae.domain.cart.entity;
 
 import com.example.demae.domain.menu.entity.Menu;
-import com.example.demae.domain.cart.dto.request.OrderRequestDto;
 import com.example.demae.domain.store.entity.Store;
 import com.example.demae.global.audit.Auditable;
 import jakarta.persistence.*;
@@ -36,9 +35,9 @@ public class OrderItem extends Auditable{
 	private Cart cart;
 
 
-	public OrderItem(OrderRequestDto orderMenuRequestDto, Store store, Menu menu, Cart cart) {
-		this.price = orderMenuRequestDto.getOrderItemPrice();
-		this.quantity = orderMenuRequestDto.getOrderItemQuantity();
+	public OrderItem(int orderItemPrice, int orderItemQuantity, Store store, Menu menu, Cart cart) {
+		this.price = orderItemPrice;
+		this.quantity = orderItemQuantity;
 		this.store = store;
 		this.menu = menu;
 		this.cart = cart;

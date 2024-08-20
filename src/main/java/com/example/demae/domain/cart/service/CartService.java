@@ -1,18 +1,18 @@
 package com.example.demae.domain.cart.service;
 
-import com.example.demae.domain.menu.entity.Menu;
-import com.example.demae.domain.menu.service.MenuService;
-import com.example.demae.domain.cart.dto.request.CartRequestDto;
+import com.example.demae.domain.cart.dto.request.DeleteCartRequestDto;
+import com.example.demae.domain.cart.dto.request.CreateCartRequestDto;
 import com.example.demae.domain.cart.dto.response.*;
 import com.example.demae.domain.cart.entity.Cart;
 import com.example.demae.domain.cart.entity.CartState;
-import com.example.demae.domain.cart.repository.CartRepository;
-import com.example.demae.domain.store.service.StoreService;
-import com.example.demae.domain.cart.dto.request.OrderRequestDto;
 import com.example.demae.domain.cart.entity.OrderItem;
-import com.example.demae.domain.store.entity.Store;
-import com.example.demae.domain.user.entity.User;
+import com.example.demae.domain.cart.repository.CartRepository;
 import com.example.demae.domain.cart.repository.OrderItemRepository;
+import com.example.demae.domain.menu.entity.Menu;
+import com.example.demae.domain.menu.service.MenuService;
+import com.example.demae.domain.store.entity.Store;
+import com.example.demae.domain.store.service.StoreService;
+import com.example.demae.domain.user.entity.User;
 import com.example.demae.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class CartService {
 	private final StoreService storeService;
 	private final MenuService menuService;
 
-	public void createCart(OrderRequestDto orderRequestDto, String userEmail) {
+	public void createCartAndOrderItem(CreateCartRequestDto orderRequestDto, String userEmail) {
 		User user = userService.findUser(userEmail);
 
 		Cart cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.READY);
@@ -43,20 +43,23 @@ public class CartService {
 
 		Store store = storeService.findStore(orderRequestDto.getStoreId());
 		Menu menu = menuService.findMenu(orderRequestDto.getMenuId());
-		OrderItem orderItem = new OrderItem(orderRequestDto, store, menu, cart);
+		OrderItem orderItem = new OrderItem(orderRequestDto.getOrderItemPrice(), orderRequestDto.getOrderItemQuantity(), store, menu, cart);
 		orderItemRepository.save(orderItem);
 
 		cart.addTotalPrice(orderRequestDto.getOrderItemPrice() * orderRequestDto.getOrderItemQuantity());
 	}
 
-	public void addOrderItem(CartRequestDto cartRequestDto, String userEmail) {
-		User user = userService.findUser(userEmail);
-
-		Cart cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.READY);
-
-		CartState cartState = CartState.valueOf(cartRequestDto.getCartState().toUpperCase());
-		cart.updateCartState(cartState);
-	}
+//	public void deleteOrderItem(Long cartId, DeleteCartRequestDto cartRequestDto, String userEmail) {
+//		User user = userService.findUser(userEmail);
+//
+//		Cart cart = findCart(cartId);
+//
+//		OrderItem orderItem = orderItemRepository.findByCart_CartIdAndOrderItemId(cartId, cartRequestDto.getOrderItemId());
+//
+////		Cart cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.READY);
+////		CartState cartState = CartState.valueOf(cartRequestDto.getCartState().toUpperCase());
+////		cart.updateCartState(cartState);
+//	}
 
 	public void deleteCart(Long cartId, String userEmail) {
 		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("장바구니가 없습니다."));
