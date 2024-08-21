@@ -4,24 +4,44 @@
 <head>
   <meta charset="UTF-8">
   <title>로그인 페이지</title>
-  <link rel="stylesheet" href="/static/css/login.css">
+  <link rel="stylesheet" href="/css/loginAndSignUp.css">
 </head>
 
 <body>
+<div>
+  <div class="main-header">
+    <h2>로그인</h2>
+  </div>
+  <label for="userEmail">이메일:</label>
+  <input type="email" id="userEmail" required><br>
 
-<div class="main-header">
-  <h2>로그인</h2>
-</div>
+  <label for="userPassword">비밀번호:</label>
+  <input type="password" id="userPassword" required><br>
 
-<form action="/api/logins" method="post" class="form-container" enctype="application/json">
-  <label for="email" class="form-label">이메일:</label>
-  <input type="email" id="email" name="email" class="form-input" required>
-
-  <label for="password" class="form-label">비밀번호:</label>
-  <input type="password" id="password" name="password" class="form-input" required>
-
-  <button type="submit" class="btn">로그인</button>
+  <button onclick="joinForm()">가입하기</button>
   <a class="btn" href="/main">메인 페이지</a>
-</form>
+</div>
+<script>
+  function joinForm(){
+    const joinData = {
+      userEmail: document.getElementById('userEmail').value,
+      userPassword: document.getElementById('userPassword').value
+    };
+    fetch('/api/users/logins', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(joinData)
+    })
+    .then(data => {
+      alert("로그인 성공");
+      window.location.href="/";
+    })
+    .catch(error => {
+      console.error('에러:', error);
+    });
+  }
+</script>
 </body>
 </html>
