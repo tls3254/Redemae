@@ -4,41 +4,69 @@
     <meta charset="UTF-8">
     <title>사용자 등록 페이지</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/signUp.css">
+    <link rel="stylesheet" href="/css/signUp.css">
 </head>
 <body>
 
-<form id="userRegistrationForm" action="/api/users" method="post">
+<div>
     <div class="main-header">
         <h2>사용자 등록 폼</h2>
     </div>
-    <label for="email" class="form-label">이메일:</label>
-    <input type="email" id="email" name="email" class="form-input" required><br>
+    <label for="userEmail">이메일:</label>
+    <input type="email" id="userEmail" required><br>
 
-    <label for="password" class="form-label">비밀번호:</label>
-    <input type="password" id="password" name="password" class="form-input" required><br>
+    <label for="userPassword">비밀번호:</label>
+    <input type="password" id="userPassword" required><br>
 
-    <label for="phone" class="form-label">전화번호:</label>
-    <input type="text" id="phone" name="phone" class="form-input" required><br>
+    <label for="userPhone">전화번호:</label>
+    <input type="text" id="userPhone" required><br>
 
-    <label for="name" class="form-label">이름:</label>
-    <input type="text" id="name" name="name" class="form-input" required><br>
+    <label for="userName">이름:</label>
+    <input type="text" id="userName" required><br>
 
-    <label for="address" class="form-label">주소:</label>
-    <input type="text" id="address" name="address" class="form-input" required><br>
+    <label for="userAddress">주소:</label>
+    <input type="text" id="userAddress" required><br>
 
-    <label for="admin" class="form-label">관리자 및 가계 주인 여부:</label>
-    <select id="admin" name="admin" class="form-input">
-        <option value="admin" selected>관리자</option>
+    <label for="userRole" class="form-label">관리자 및 가계 주인 여부:</label>
+    <select id="userRole" name="admin" class="form-input">
+        <option value="admin">관리자</option>
         <option value="store">상점</option>
-        <option value="user">유저</option>
+        <option value="user" selected>유저</option>
     </select><br>
 
-    <label for="adminToken" class="form-label">관리자 토큰:</label>
-    <input type="text" id="adminToken" name="adminToken" class="form-input" readonly><br>
+    <label for="adminToken">관리자 토큰:</label>
+    <input type="text" id="adminToken"><br>
 
-    <button type="submit" class="btn btn-primary">가입하기</button>
+    <button onclick="submitForm()">가입하기</button>
     <a class="btn btn-primary" href="root/main">메인 페이지</a>
-</form>
+</div>
+<script>
+    function submitForm() {
+        const formData = {
+            userEmail: document.getElementById('userEmail').value,
+            userPassword: document.getElementById('userPassword').value,
+            userPhone: document.getElementById('userPhone').value,
+            userName: document.getElementById('userName').value,
+            userAddress: document.getElementById('userAddress').value,
+            userRole: document.getElementById('userRole').value,
+            adminToken: document.getElementById('adminToken').value
+        };
+
+        fetch('/api/users/join', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(data => {
+            alert("회원 가입 성공");
+            window.location.href="/";
+        })
+        .catch(error => {
+            console.error('에러:', error);
+        });
+    }
+</script>
 </body>
 </html>
