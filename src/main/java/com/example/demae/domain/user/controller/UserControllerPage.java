@@ -31,7 +31,7 @@ public class UserControllerPage {
     public String mainPage(@AuthenticationPrincipal UserDetails userDetails,
                            Model model) {
         if (userDetails == null) {
-            return "root/storeMain";
+            return "root/main";
         }
 
         User user = userService.findUser(userDetails.getUsername());
@@ -41,6 +41,6 @@ public class UserControllerPage {
             model.addAttribute("UserRole", user.getUserRole().toString());
         }
 
-        return "root/storeMain";
+        return "root/main";
     }
 }

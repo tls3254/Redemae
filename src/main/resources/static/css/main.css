@@ -1,32 +1,49 @@
+/* main.css */
+
 body {
-    background-color: #ffffff;
+    background-color: #f0f8ff; /* 밝은 파란색 배경 */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     text-align: center;
-    padding: 50px;
 }
 
-.main-header {
-    background-color: #3498db;
-    color: #ffffff;
-    padding: 10px;
+.form-box {
+    background-color: #ffffff; /* 하얀색 배경 */
+    border: 2px solid #1e90ff; /* 파란색 테두리 */
     border-radius: 10px;
-    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.2);
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto; /* 중앙 정렬 */
+    box-sizing: border-box;
 }
 
-.btn {
-    background-color: #3498db;
-    color: #ffffff;
+.main-header h1 {
+    color: #1e90ff; /* 파란색 텍스트 */
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+a.btn {
+    display: inline-block;
+    margin: 10px;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    color: #ffffff; /* 하얀색 텍스트 */
+    background-color: #1e90ff; /* 파란색 배경 */
     text-decoration: none;
-    margin-right: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-.btn:hover {
-    background-color: #2980b9;
+a.btn:hover {
+    background-color: #4682b4; /* 버튼 호버 시 진한 파란색 */
 }
 
-.store-link:last-child {
-    margin-right: 0;
+@media (max-width: 600px) {
+    .form-box {
+        width: 95%;
+    }
 }
