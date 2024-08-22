@@ -23,20 +23,16 @@ public class MenuControllerPage {
     private final MenuService menuService;
     private final UserService userService;
 
-    @GetMapping("/join")
-    public String menuCreatePage(@PathVariable Long storeId,
-                                 Model model){
-        model.addAttribute("storeId", storeId);
-        return "menu/menu";
-    }
-
     @GetMapping
     public String findMenus(@PathVariable Long storeId,
                             @AuthenticationPrincipal UserDetails userDetails,
                             Model model){
-        User user = userService.findUser(userDetails.getUsername());
         List<MenuResponseDto> findMenus = menuService.findMenus(storeId);
         model.addAttribute("menuList", findMenus);
+        if(userDetails == null){
+            return "menu/showMenuPageUser";
+        }
+        User user = userService.findUser(userDetails.getUsername());
         if (user.getUserRole().name().equals("STORE") && user.getStore().getStoreId().equals(storeId)) {
             return "menu/showMenuPage";
         }
@@ -48,12 +44,23 @@ public class MenuControllerPage {
                            @PathVariable Long menuId,
                            @AuthenticationPrincipal UserDetails userDetails,
                            Model model){
-        User user = userService.findUser(userDetails.getUsername());
+
         MenuResponseDto findMenu = menuService.findMenuStore(storeId,menuId);
         model.addAttribute("menuOne", findMenu);
+        if(userDetails == null){
+            return "menu/showSelectMenuUser";
+        }
+        User user = userService.findUser(userDetails.getUsername());
         if (user.getUserRole().name().equals("STORE") && user.getStore().getStoreId().equals(storeId)) {
             return "menu/showSelectMenu";
         }
         return "menu/showSelectMenuUser";
+    }
+
+    @GetMapping("/join")
+    public String menuCreatePage(@PathVariable Long storeId,
+                                 Model model){
+        model.addAttribute("storeId", storeId);
+        return "menu/menu";
     }
 }
