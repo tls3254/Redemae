@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <!--  <script src="/js/common-sse.js"></script>-->
   <title>가게 페이지</title>
-  <link rel="stylesheet" href="/css/store.css">
+  <link rel="stylesheet" href="/static/css/store.css">
 </head>
 <body>
 
@@ -26,12 +26,13 @@
       <td th:text="${store.storeAddress}"></td>
       <td th:text="${store.storeCategory}" ></td>
       <td>
-        <a th:href="@{/stores/{storeId}(storeId=${store.getStoreId()})}" class="btn">가게 정보 보기</a>
+        <a th:href="@{/stores/{storeId}/menus(storeId=${store.getStoreId()})}" class="btn">메뉴 정보 보기</a>
+        <a th:if="${UserRole == 'ADMIN'}" th:href="@{/stores/{storeId}(storeId=${store.getStoreId()})}" class="btn">가게 상세 정보 보기</a>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-<a th:href="@{/users/main}" class="btn">메인 페이지</a>
+<a th:href="@{/}" class="btn">메인 페이지</a>
 </body>
 </html>
