@@ -8,4 +8,7 @@ public class rootControllerPage {
 
     @GetMapping
     public String indexPage(){ return "root/index";}
+
+    @GetMapping("/error")
+    public String errorPage(){ return "root/error"; }
 }
