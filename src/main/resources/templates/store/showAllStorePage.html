@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
-  <script src="/js/common-sse.js"></script>
+<!--  <script src="/js/common-sse.js"></script>-->
   <title>상점</title>
-  <link rel="stylesheet" href="/static/css/store.css">
+  <link rel="stylesheet" href="/css/store.css">
 </head>
 <body>
 
@@ -26,12 +26,12 @@
       <td th:text="${store.storeAddress}"></td>
       <td th:text="${store.storeCategory}" ></td>
       <td>
-        <a th:href="@{/api/stores/{storeId}(id=${store.getStoreId()})}" class="btn btn-info store-link">가게 정보 보기</a>
+        <a th:href="@{/stores/{storeId}(storeId=${store.getStoreId()})}" class="btn">가게 정보 보기</a>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-<a th:href="@{/users/main}" class="btn btn-primary">메인 페이지</a>
+<a th:href="@{/users/main}" class="btn">메인 페이지</a>
 </body>
 </html>
