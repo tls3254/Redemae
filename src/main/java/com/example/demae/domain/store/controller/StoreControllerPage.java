@@ -25,13 +25,15 @@ public class StoreControllerPage {
     private final StoreService storeService;
     private final UserService userService;
 
-    @GetMapping("/join")
-    public String home(){return "store/store";}
-
     @GetMapping
     public String findStores(@RequestParam(defaultValue = "0") int page,
                              @RequestParam(defaultValue = "10") int size,
+                             @AuthenticationPrincipal UserDetails userDetails,
                              Model model){
+        if(userDetails != null) {
+            User user = userService.findUser(userDetails.getUsername());
+            model.addAttribute("UserRole", user.getUserRole().toString());
+        }
         Page<StoreResponseDto> stores = storeService.findStoreAll(page, size);
         model.addAttribute("storePages", stores);
         return "store/showAllStorePage";
@@ -49,14 +51,20 @@ public class StoreControllerPage {
     public String findStore(@PathVariable Long storeId,
                             @AuthenticationPrincipal UserDetails userDetails,
                             Model model){
+        if(userDetails == null){
+            return "root/error";
+        }
         User user = userService.findUser(userDetails.getUsername());
         StoreResponseDto store = storeService.findStoreOne(storeId);
         model.addAttribute("store", store);
-        if (userDetails.getAuthorities().toString().equals("ROLE_ADMIN") && user.getStore().getStoreId().equals(storeId)) {
+        if (userDetails.getAuthorities().toString().equals("ADMIN") && user.getStore().getStoreId().equals(storeId)) {
             return "store/showStorePage";
         }
-        return "store/showStorePageUser";
+        return "root/error";
     }
+
+    @GetMapping("/join")
+    public String shopCreatePage(){return "store/store";}
 
 }
 
