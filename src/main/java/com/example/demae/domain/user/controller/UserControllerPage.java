@@ -38,8 +38,8 @@ public class UserControllerPage {
 
         if (user.getUserRole().toString().equals("ADMIN") && user.getStore() != null) {
             model.addAttribute("storeId", user.getStore().getStoreId());
-            model.addAttribute("UserRole", user.getUserRole().toString());
         }
+        model.addAttribute("UserRole", user.getUserRole().toString());
 
         return "root/main";
     }

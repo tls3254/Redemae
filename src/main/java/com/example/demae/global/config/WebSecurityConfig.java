@@ -74,18 +74,15 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(cs -> cs.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .formLogin(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable);
+                .formLogin(f -> f.disable())
+                .httpBasic(h -> h.disable());
 
         http.authorizeHttpRequests((authorizeHttpRequests)->
                 authorizeHttpRequests
-                        .requestMatchers("/api/users/**").permitAll()
-                        .requestMatchers("/test").permitAll()
                         .requestMatchers("/**").permitAll()
-
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
         );
 
         http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
