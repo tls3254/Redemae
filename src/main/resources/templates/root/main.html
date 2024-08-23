@@ -17,7 +17,7 @@
     <a th:if="${storeId != null}" th:href="@{/stores/{storeId}(storeId=${storeId})}" class="btn">나의 상점 입장</a>
     <a th:href="@{/stores}" class="btn">가게 페이지</a>
     <a th:href="@{/orders}" class="btn">주문 조회</a>
-    <a th:if="${UserRole == 'ADMIN'}" th:href="@{/stores/home}" class="btn">나의 상점 생성</a>
+    <a th:if="${UserRole == 'ADMIN'}" th:href="@{/stores/join}" class="btn">나의 상점 생성</a>
     <a th:href="@{/}" class="btn">소개 페이지</a>
   </div>
 </body>

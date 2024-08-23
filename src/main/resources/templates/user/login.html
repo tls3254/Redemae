@@ -24,10 +24,10 @@
 <script>
   function joinForm(){
     const joinData = {
-      userEmail: document.getElementById('userEmail').value,
-      userPassword: document.getElementById('userPassword').value
+      username: document.getElementById('userEmail').value,
+      password: document.getElementById('userPassword').value
     };
-    fetch('/api/users/logins', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,8 +35,11 @@
       body: JSON.stringify(joinData)
     })
     .then(data => {
-      alert("로그인 성공");
-      window.location.href="/";
+      if(data.ok) {
+        alert("로그인 성공");
+        console.log(data)
+        window.location.href="/";
+      }
     })
     .catch(error => {
       console.error('에러:', error);
