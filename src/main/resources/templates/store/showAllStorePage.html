@@ -27,7 +27,7 @@
       <td th:text="${store.storeCategory}" ></td>
       <td>
         <a th:href="@{/stores/{storeId}/menus(storeId=${store.getStoreId()})}" class="btn">메뉴 정보 보기</a>
-        <a th:if="${UserRole == 'ADMIN'}" th:href="@{/stores/{storeId}(storeId=${store.getStoreId()})}" class="btn">가게 상세 정보 보기</a>
+        <a th:if="${user.userRole.toString() == 'ADMIN' and store.storeId == user.store.storeId}" th:href="@{/stores/{storeId}(storeId=${store.getStoreId()})}" class="btn">가게 상세 정보 보기</a>
       </td>
     </tr>
     </tbody>

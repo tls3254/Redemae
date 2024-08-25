@@ -1,8 +1,8 @@
 function store() {
     const storeData = {
-        name: document.getElementById('name').value,
-        address: document.getElementById('address').value,
-        category: document.getElementById('category').value
+        storeName: document.getElementById('name').value,
+        storeAddress: document.getElementById('address').value,
+        storeCategory: document.getElementById('category').value
     };
 
     fetch('/api/stores', {
@@ -12,27 +12,24 @@ function store() {
         },
         body: JSON.stringify(storeData),
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('response 오류');
-            }
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById('messageDivContent').textContent = '상점 생성 완료.';
-            window.location.href = '/stores';
-        })
-        .catch((error) => {
-            console.error('가져오기 작업에 문제 발생:', error);
-            alert('공백 또는 이미 가입된 계정인지 확인하세요');
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('response 오류');
+        }
+        alert("상점 생성 완료")
+        window.location.href = '/stores';
+    })
+    .catch((error) => {
+        console.error('가져오기 작업에 문제 발생:', error);
+        alert('공백 또는 이미 가입된 계정인지 확인하세요');
+    });
 }
 
 
 function updateData() {
-    var name = document.getElementById('name').value;
-    var address = document.getElementById('address').value;
-    var category = document.getElementById('category').value;
+    const name = document.getElementById('name').value;
+    const address = document.getElementById('address').value;
+    const category = document.getElementById('category').value;
 
     fetch(window.location.href, {
         method: 'PATCH',
