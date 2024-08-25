@@ -33,7 +33,7 @@
 
 <a th:href="@{/stores/{storeId}/menus/(storeId=${storeId})}" type="button" class="btn" >가게 메뉴 보기</a>
 <a class="btn" data-toggle="modal" data-target="#textModal">가게정보 수정</a>
-<a class="btn" onclick="deleteStore()">가게정보 삭제</a>
+<a class="btn btn-pri" th:data-store-id="${store.storeId}" onclick="deleteStore()">가게정보 삭제</a>
 <a th:href="@{'/'}" class="btn">메인 페이지</a>
 
 <div class="modal" id="textModal" tabindex="-1" role="dialog">

@@ -57,32 +57,24 @@ function updateData() {
 }
 
 
-    function deleteStore() {
-    if (confirm("정말로 가게를 삭제하시겠습니까?")) {
-    fetch(window.location.href, {
-    method: 'DELETE',
-    headers: {
-    'Content-Type': 'application/json',
-},
-})
+function deleteStore() {
+    const updateButton = document.querySelector('.btn-pri');
+    const storeId = updateButton.getAttribute('data-store-id');
+
+    fetch(`/api/stores/${storeId}`, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+    })
     .then(response => {
-    if (response.ok) {
-    window.location.href = '/api/stores';
-    // 또는
-    // window.location.href = '/redirect-url'; // 리다이렉션
-} else {
-    // console.error('가게 삭제 중 오류 발생');
-}
-}).then(result => {
-    // 서버에서 "ok" 또는 "fail"을 응답으로 보내면 이에 따라 처리
-    if (result.trim() === "fail") {
-    // 클라이언트에서 수정 실패 시 팝업창 띄우기
-    alert('상점 삭제에 실패했습니다.');
-}
-})
-    .catch(error => {
-    console.error('에러:', error);
-    alert('상점 삭제 중에 오류가 발생했습니다.');
-})
-}
+        if (response.ok) {
+            window.location.href = '/api/stores';
+        } else {
+            alert('상점 삭제에 실패했습니다.');
+        }
+    }).catch(error => {
+        console.error('에러:', error);
+        alert('상점 삭제 중에 오류가 발생했습니다.');
+    })
 }
