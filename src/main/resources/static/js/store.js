@@ -27,45 +27,32 @@ function store() {
 
 
 function updateData() {
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const category = document.getElementById('category').value;
+    const storeData = {
+        storeName : document.getElementById('name').value,
+        storeAddress : document.getElementById('address').value,
+        storeCategory : document.getElementById('category').value
+    }
+    const updateButton = document.querySelector('.btn-primary');
+    const storeId = updateButton.getAttribute('data-store-id');
 
-    fetch(window.location.href, {
+    fetch(`/api/stores/${storeId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            name: name,
-            address: address,
-            category: category
-        }),
+        body: JSON.stringify(storeData),
     })
-        .then(response => {
-            if (response.ok) {
-                // 성공 시 처리
-                window.location.reload();
-            } else {
-                // 실패 시 처리
-                console.log("실패")
-                return response.text();
-            }
-        })
-        .then(result => {
-            // 서버에서 "ok" 또는 "fail"을 응답으로 보내면 이에 따라 처리
-            if (result.trim() === "fail") {
-                // 클라이언트에서 수정 실패 시 팝업창 띄우기
-                alert('상점 수정에 실패했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('에러:', error);
-            // 서버에서 오류 응답이 오면 여기에서 처리
-            // alert('상점 수정 중에 오류가 발생했습니다.');
-        });
-
-    // 데이터 수정 후 모달 닫기
+    .then(response => {
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert('상점 수정에 실패했습니다.');
+            return response.text();
+        }
+    })
+    .catch(error => {
+        console.error('에러:', error);
+    });
     $('#textModal').modal('hide');
 }
 

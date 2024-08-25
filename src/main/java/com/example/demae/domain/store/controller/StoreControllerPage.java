@@ -57,10 +57,10 @@ public class StoreControllerPage {
         User user = userService.findUser(userDetails.getUsername());
         StoreResponseDto store = storeService.findStoreOne(storeId);
         model.addAttribute("store", store);
-        if (userDetails.getAuthorities().toString().equals("ADMIN") && user.getStore().getStoreId().equals(storeId)) {
-            return "store/showStorePage";
-        }
-        return "root/error";
+//        if (userDetails.getAuthorities().toString().equals("ADMIN") && user.getStore().getStoreId().equals(storeId)) {
+//            return "store/showStorePage";
+//        }
+        return "store/showStorePage";
     }
 
     @GetMapping("/join")
