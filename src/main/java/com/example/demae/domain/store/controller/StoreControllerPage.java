@@ -32,7 +32,7 @@ public class StoreControllerPage {
                              Model model){
         if(userDetails != null) {
             User user = userService.findUser(userDetails.getUsername());
-            model.addAttribute("UserRole", user.getUserRole().toString());
+            model.addAttribute("user", user);
         }
         Page<StoreResponseDto> stores = storeService.findStoreAll(page, size);
         model.addAttribute("storePages", stores);
