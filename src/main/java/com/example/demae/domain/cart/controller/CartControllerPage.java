@@ -1,7 +1,7 @@
 package com.example.demae.domain.cart.controller;
 
 import com.example.demae.domain.cart.dto.response.CartListResponseDto;
-import com.example.demae.domain.cart.dto.response.OrderAllResponseDto;
+import com.example.demae.domain.cart.dto.response.CartAllResponseDto;
 import com.example.demae.domain.cart.dto.response.OrderResponseDto;
 import com.example.demae.domain.user.entity.User;
 import com.example.demae.domain.user.service.UserService;
@@ -30,8 +30,8 @@ public class CartControllerPage {
 	public String getAllOrder(@AuthenticationPrincipal UserDetails userDetails,
 							  Model model) {
 		User user = userService.findUser(userDetails.getUsername());
-		List<OrderAllResponseDto> cart = cartService.getAllOrderInfo(userDetails.getUsername());
-		model.addAttribute("cartAll", cart);
+		List<CartAllResponseDto> cart = cartService.getAllOrderInfo(userDetails.getUsername());
+		model.addAttribute("cart", cart);
 		if(user.getUserRole().toString().equals("USER")) {
 			return "order/orderAllInfoPageUser";
 		}

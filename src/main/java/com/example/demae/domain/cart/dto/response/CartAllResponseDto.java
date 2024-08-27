@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class OrderAllResponseDto {
+public class CartAllResponseDto {
 	private Long cartId;
 	private Long userId;
 	private LocalDateTime date;
 	private CartState state;
 	private int totalPrice;
 
-	public OrderAllResponseDto(Cart cart) {
+	public CartAllResponseDto(Cart cart) {
 		this.cartId = cart.getCartId();
 		this.userId = cart.getUser().getUserId();
 		this.date = cart.getModifiedAt();

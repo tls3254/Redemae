@@ -1,6 +1,5 @@
 package com.example.demae.domain.cart.service;
 
-import com.example.demae.domain.cart.dto.request.DeleteCartRequestDto;
 import com.example.demae.domain.cart.dto.request.CreateCartRequestDto;
 import com.example.demae.domain.cart.dto.response.*;
 import com.example.demae.domain.cart.entity.Cart;
@@ -70,10 +69,10 @@ public class CartService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<OrderAllResponseDto> getAllOrderInfo(String userEmail) {
+	public List<CartAllResponseDto> getAllOrderInfo(String userEmail) {
 		User user = userService.findUser(userEmail);
 		List<Cart> orderList = cartRepository.findByUser_UserId(user.getUserId());
-		return orderList.stream().map(OrderAllResponseDto::new).toList();
+		return orderList.stream().map(CartAllResponseDto::new).toList();
 	}
 
 	@Transactional(readOnly = true)
