@@ -51,7 +51,7 @@ public class MenuControllerPage {
         MenuResponseDto findMenu = menuService.findMenuStore(storeId,menuId);
         model.addAttribute("menuOne", findMenu);
         if(userDetails == null){
-            return "menu/showSelectMenuUser";
+            return "root/error";
         }
         User user = userService.findUser(userDetails.getUsername());
 //        if (user.getUserRole().name().equals("STORE") && user.getStore().getStoreId().equals(storeId)) {

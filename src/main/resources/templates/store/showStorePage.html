@@ -3,8 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Store Page</title>
-	<script src="/js/common-sse.js"></script>
-	<link rel="stylesheet" href="/css/oneStore.css">
+<!--	<script src="/js/common-sse.js"></script>-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/oneStoreAndMenu.css">
 	<script src="/js/store.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 </head>
@@ -31,7 +32,7 @@
 	</table>
 </div>
 
-<a th:href="@{/stores/{storeId}/menus/(storeId=${storeId})}" type="button" class="btn" >가게 메뉴 보기</a>
+<a th:href="@{/stores/{storeId}/menus(storeId=${storeId})}" type="button" class="btn" >가게 메뉴 보기</a>
 <a class="btn" data-toggle="modal" data-target="#textModal">가게정보 수정</a>
 <a class="btn btn-pri" th:data-store-id="${store.storeId}" onclick="deleteStore()">가게정보 삭제</a>
 <a th:href="@{'/'}" class="btn">메인 페이지</a>
