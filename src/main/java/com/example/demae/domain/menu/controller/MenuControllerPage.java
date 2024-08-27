@@ -27,16 +27,19 @@ public class MenuControllerPage {
     public String findMenus(@PathVariable Long storeId,
                             @AuthenticationPrincipal UserDetails userDetails,
                             Model model){
+        if(userDetails == null){
+            return "root/error";
+        }
         List<MenuResponseDto> findMenus = menuService.findMenus(storeId);
         model.addAttribute("menuList", findMenus);
-        if(userDetails == null){
-            return "menu/showMenuPageUser";
-        }
         User user = userService.findUser(userDetails.getUsername());
-        if (user.getUserRole().name().equals("STORE") && user.getStore().getStoreId().equals(storeId)) {
-            return "menu/showMenuPage";
-        }
-        return "menu/showMenuPageUser";
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("user", user);
+//        if (user.getUserRole().name().equals("STORE") && user.getStore().getStoreId().equals(storeId)) {
+//            return "menu/showMenuPage";
+//        }
+//        return "menu/showMenuPageUser";
+        return "menu/showMenuPage";
     }
 
     @GetMapping("/{menuId}")
@@ -51,10 +54,11 @@ public class MenuControllerPage {
             return "menu/showSelectMenuUser";
         }
         User user = userService.findUser(userDetails.getUsername());
-        if (user.getUserRole().name().equals("STORE") && user.getStore().getStoreId().equals(storeId)) {
-            return "menu/showSelectMenu";
-        }
-        return "menu/showSelectMenuUser";
+//        if (user.getUserRole().name().equals("STORE") && user.getStore().getStoreId().equals(storeId)) {
+//            return "menu/showSelectMenu";
+//        }
+//        return "menu/showSelectMenuUser";
+        return "menu/showSelectMenu";
     }
 
     @GetMapping("/join")
