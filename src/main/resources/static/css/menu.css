@@ -1,78 +1,91 @@
+/* 전체 페이지 기본 스타일 설정 */
 body {
-    background-color: #f8f9fa;
+    background-color: #f0f8ff; /* 연한 파란색 배경 */
+    font-family: Arial, sans-serif; /* 기본 폰트 설정 */
+    margin: 0;
+    padding: 0;
+    text-align: center; /* 텍스트 중앙 정렬 */
 }
 
+/* 제목 스타일 */
 h1 {
-    color: #007bff;
+    color: #1e90ff; /* 파란색 텍스트 */
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-table {
-    border-spacing: 0;
-    width: 80%;
-    margin: 20px 0;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* 폼 컨테이너 스타일 */
+div {
+    background-color: #ffffff; /* 흰색 배경 */
+    border: 2px solid #1e90ff; /* 파란색 경계 */
+    border-radius: 10px; /* 둥근 모서리 */
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto; /* 중앙 정렬 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.2); /* 파란색 그림자 */
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+/* 레이블 스타일 */
+label {
+    font-size: 16px; /* 글자 크기 */
+    color: #1e90ff; /* 파란색 텍스트 */
+    display: block; /* 블록 레벨 요소로 설정 */
+    margin: 10px 0 5px; /* 여백 설정 */
 }
 
-th {
-    background-color: #007bff;
-    color: #ffffff;
+/* 입력 필드 스타일 */
+input[type="text"] {
+    width: calc(100% - 20px); /* 너비 설정 (패딩과 경계 고려) */
+    padding: 8px;
+    margin-bottom: 10px; /* 아래 여백 */
+    border: 1px solid #1e90ff; /* 파란색 경계 */
+    border-radius: 5px; /* 둥근 모서리 */
+    box-sizing: border-box; /* 패딩과 경계가 너비에 포함되도록 설정 */
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.store-link {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.store-link:hover {
-    background-color: #0056b3;
-}
-
-.btn {
-    background-color: #007bff;
-    color: #ffffff;
+/* 버튼 스타일 */
+button {
+    background-color: #1e90ff; /* 파란색 배경 */
+    color: #ffffff; /* 흰색 텍스트 */
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-right: 10px;
+    border-radius: 5px; /* 둥근 모서리 */
+    font-size: 16px; /* 글자 크기 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
 }
 
-.btn:hover {
-    background-color: #2980b9;
+/* 버튼 호버 스타일 */
+button:hover {
+    background-color: #4682b4; /* 호버 시 색상 변화 */
 }
 
-.store-link:last-child {
-    margin-right: 0;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
+/* 링크 버튼 스타일 */
+a.btn {
     display: inline-block;
-    margin-right: 10px;
+    margin: 10px 5px;
+    padding: 10px 15px;
+    color: #ffffff; /* 흰색 텍스트 */
+    background-color: #1e90ff; /* 파란색 배경 */
+    text-decoration: none; /* 밑줄 제거 */
+    border-radius: 5px; /* 둥근 모서리 */
+    font-size: 14px; /* 글자 크기 */
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
+/* 링크 버튼 호버 스타일 */
+a.btn:hover {
+    background-color: #4682b4; /* 호버 시 색상 변화 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    div {
+        width: 95%; /* 화면이 좁아지면 컨테이너 너비를 95%로 조정 */
+    }
+
+    button, a.btn {
+        font-size: 14px; /* 글자 크기 조정 */
+        padding: 8px 12px; /* 패딩 조정 */
+    }
 }
