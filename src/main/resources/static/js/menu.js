@@ -1,5 +1,31 @@
 function addCart(){
+    const smObject = document.getElementById("storeAndMenu");
+    const mpAndMq = document.getElementById("priceAndQ");
+    const cartObject = {
+        orderItemPrice : mpAndMq.getAttribute("data-price"),
+        orderItemQuantity : mpAndMq.getAttribute("data-quantity"),
+        storeId : smObject.getAttribute("data-store-id"),
+        menuId : smObject.getAttribute("data-menu-id")
+    }
 
+    fetch('/api/carts', {
+        method:'POST',
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cartObject),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('response 오류');
+        }
+        alert("장바구니 준비 완료")
+        window.location.href = '/stores';
+    })
+    .catch((error) => {
+        console.error('가져오기 작업에 문제 발생:', error);
+        alert('공백 또는 이미 가입된 계정인지 확인하세요');
+    });
 }
 
 function createMenu() {
