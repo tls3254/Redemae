@@ -13,7 +13,7 @@
 
 <h1>메뉴</h1>
 
-<div>
+<div id="storeAndMenu" th:data-store-id="${storeId}" th:data-menu-id="${menuOne.menuId}">
     <table>
         <thead>
         <tr>
@@ -52,7 +52,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary" onclick="updateData()">수정하기</button>
+                <button type="button" class="btn btn-primary" onclick="updateMenu()">수정하기</button>
             </div>
         </div>
     </div>
