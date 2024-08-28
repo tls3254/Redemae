@@ -10,12 +10,12 @@ public class ReviewResponseDto {
     private Long reviewId;
     private int point;
     private String content;
-    private Long orderId;
+    private Long cartId;
 
     public ReviewResponseDto(Review checkReview) {
         this.reviewId =checkReview.getReviewId();
         this.point = checkReview.getReviewPoint();
         this.content = checkReview.getReviewContent();
-        this.orderId =checkReview.getCart().getCartId();
+        this.cartId =checkReview.getCart().getCartId();
     }
 }

@@ -30,9 +30,62 @@ function createReview(){
     })
     .then(response => {
         if (response.ok) {
-            window.location.href = '/carts/6/reviews';
+            window.location.href = '/carts/'+cartId+'/reviews';
         } else {
             alert('리뷰 생성에 실패했습니다.');
+            return response.text();
+        }
+    })
+    .catch(error => {
+        console.error('에러:', error);
+    });
+}
+
+function updateReview() {
+    const cartAndReview = document.getElementById("cartIdAndReviewId");
+    const cartId = cartAndReview.getAttribute("data-cart-Id");
+    const reviewId = cartAndReview.getAttribute("data-review-Id");
+    const reviewData = {
+        point: document.getElementById("point").value,
+        content: document.getElementById("content").value
+    };
+
+    fetch("/api/carts/"+cartId+"/reviews/"+reviewId, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewData),
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '/carts/'+cartId+'/reviews';
+        } else {
+            alert('리뷰 변경에 실패했습니다.');
+            return response.text();
+        }
+    })
+    .catch(error => {
+        console.error('에러:', error);
+    });
+}
+
+function deleteReview() {
+    const cartAndReview = document.getElementById("cartIdAndReviewId");
+    const cartId = cartAndReview.getAttribute("data-cart-Id");
+    const reviewId = cartAndReview.getAttribute("data-review-Id");
+
+    fetch("/api/carts/"+cartId+"/reviews/"+reviewId, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '/carts/'+cartId+'/reviews';
+        } else {
+            alert('리뷰 삭제에 실패했습니다.');
             return response.text();
         }
     })

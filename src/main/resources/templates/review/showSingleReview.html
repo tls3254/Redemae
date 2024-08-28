@@ -5,14 +5,15 @@
     <title>리뷰 페이지</title>
 <!--    <script src="/js/common-sse.js"></script>-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/review.css">
+    <link rel="stylesheet" href="/css/oneStoreAndMenu.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/js/review.js"></script>
 </head>
 <body>
 
 <h1>리뷰</h1>
 
-<div th:if="${not #lists.isEmpty(reviewOne)}">
+<div id="cartIdAndReviewId" th:data-cart-id="${reviewOne.cartId}" th:data-review-id="${reviewOne.reviewId}">
     <table>
         <thead>
         <tr>
@@ -29,9 +30,7 @@
     </table>
 </div>
 
-<a class="btn btn-primary " data-toggle="modal" data-target="#textModal">
-    리뷰 정보 수정
-</a>
+<a class="btn btn-primary " data-toggle="modal" data-target="#textModal">리뷰 정보 수정</a>
 <a class="btn btn-primary" onclick="deleteReview()">리뷰 정보 삭제</a>
 <a th:href="@{'/'}" class="btn btn-primary">메인 페이지</a>
 <!-- Modal for text input -->
@@ -45,7 +44,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Input fields for text -->
                 <label for="point">리뷰 점수 변경:</label>
                 <input type="number" id="point" name="point" class="form-control"/>
 
@@ -54,62 +52,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <!-- "수정하기" 버튼 추가 -->
                 <button type="button" class="btn btn-primary" onclick="updateReview()">수정하기</button>
             </div>
         </div>
     </div>
 </div>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var orderId = /*[[${reviewOne.orderId}]]*/ null; // 동적으로 설정하려는 가게 ID
-    var reviewId = /*[[${reviewOne.id}]]*/ null;  // 동적으로 설정하려는 리뷰 ID
-    /*]]>*/
-</script>
-<script>
-    function updateReview() {
-        var reviewData = {
-            point: $('#point').val(),
-            content: $('#content').val()
-        };
-
-        $.ajax({
-            type: 'PATCH',
-            url: '/api/orders/'+orderId+'/patchReview/'+reviewId,
-            contentType: 'application/json',
-            data: JSON.stringify(reviewData),  // 객체 이름을 reviewData로 변경
-            success: function (message) {
-                window.location.href = '/api/orders/'+orderId+'/multiReview';
-            },
-            error: function () {
-                $('#messageDiv').text('Failed to update review.');  // 실패 시 메시지 변경
-            }
-        });
-    }
-</script>
-<script>
-    function deleteReview() {
-        var reviewData  = {
-            name: $('#point').val(),
-            price: $('#content').val()
-        };
-
-        $.ajax({
-            type: 'DELETE',
-            url: '/api/orders/'+orderId+'/deleteReview/'+reviewId,
-            contentType: 'application/json',
-            data: JSON.stringify(reviewData),
-            success: function (message) {
-                window.location.href = '/api/orders/'+orderId+'/multiReview';
-            },
-            error: function () {
-                $('#messageDiv').text('Failed to create menu.');
-            }
-        });
-    }
-</script>
-
-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
