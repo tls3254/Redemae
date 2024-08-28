@@ -1,80 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <script src="/js/common-sse.js"></script>
-    <title>Show Menu</title>
+    <title>리뷰 페이지</title>
+<!--    <script src="/js/common-sse.js"></script>-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px 0;
-            background-color: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        .alert {
-            margin-top: 20px;
-        }
-
-        .btn {
-            margin-right: 10px;
-        }
-
-        #textModal {
-            color: #007bff;
-        }
-
-        .modal-title {
-            color: #007bff;
-        }
-
-        .modal-body label {
-            font-weight: bold;
-        }
-
-        .modal-footer {
-            justify-content: space-between;
-        }
-
-        .form-control {
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/review.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
-<h1>Show Menu</h1>
+<h1>리뷰</h1>
 
 <div th:if="${not #lists.isEmpty(reviewOne)}">
     <table>
@@ -85,21 +21,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="review : ${reviewOne}">
-            <td th:text="${review.point}"></td>
-            <td th:text="${review.content}"></td>
+        <tr>
+            <td th:text="${reviewOne.point}"></td>
+            <td th:text="${reviewOne.content}"></td>
         </tr>
         </tbody>
     </table>
 </div>
-<div th:if="${#lists.isEmpty(reviewOne)}">
-    <p>No menus available.</p>
-</div>
 
-<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#textModal">
+<a class="btn btn-primary " data-toggle="modal" data-target="#textModal">
     리뷰 정보 수정
-</button>
-<button type="button" class="btn btn-danger" onclick="deleteReview()">리뷰 정보 삭제</button>
+</a>
+<a class="btn btn-primary" onclick="deleteReview()">리뷰 정보 삭제</a>
 <a th:href="@{'/'}" class="btn btn-primary">메인 페이지</a>
 <!-- Modal for text input -->
 <div class="modal" id="textModal" tabindex="-1" role="dialog">
@@ -176,10 +109,7 @@
     }
 </script>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

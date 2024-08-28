@@ -7,13 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReviewResponseDto {
-    private Long id;
+    private Long reviewId;
     private int point;
     private String content;
     private Long orderId;
 
     public ReviewResponseDto(Review checkReview) {
-        this.id =checkReview.getReviewId();
+        this.reviewId =checkReview.getReviewId();
         this.point = checkReview.getReviewPoint();
         this.content = checkReview.getReviewContent();
         this.orderId =checkReview.getCart().getCartId();

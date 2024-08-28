@@ -14,19 +14,19 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/carts")
+@RequestMapping("/carts/{cartId}/reviews")
 public class ReviewControllerPage {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/{cartId}/createReview")
+    @GetMapping("/join")
     public String showCreateReviewPage(@PathVariable Long cartId,
                                        Model model){
         model.addAttribute("cartId",cartId);
         return "review/createReview";
     }
 
-    @GetMapping("/{cartId}/multiReview")
+    @GetMapping()
     public String multiReview(@PathVariable Long cartId,
                               Model model){
         List<ReviewResponseDto> review = reviewService.getAllReview(cartId);
@@ -34,7 +34,7 @@ public class ReviewControllerPage {
         return "review/showReview";
     }
 
-    @GetMapping("/{cartId}/singleReview/{reviewId}")
+    @GetMapping("/{reviewId}")
     public String singleReview(@PathVariable Long cartId,
                                @PathVariable Long reviewId,
                                Model model){
