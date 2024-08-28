@@ -6,14 +6,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OrderMenuResponseDto {
-	private Long cartId;
+public class OrderItemResponseDto {
 	private int price;
 	private int quantity;
+	private Long cartId;
 
-	public OrderMenuResponseDto(OrderItem orderList) {
-		this.cartId = orderList.getCart().getCartId();
+	public OrderItemResponseDto(OrderItem orderList) {
 		this.price = orderList.getPrice();
 		this.quantity = orderList.getQuantity();
+		this.cartId = orderList.getCart().getCartId();
 	}
 }

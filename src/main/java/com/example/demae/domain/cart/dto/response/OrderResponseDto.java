@@ -9,10 +9,10 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderResponseDto {
-	private List<OrderMenuResponseDto> orderList = new ArrayList<>();
+	private List<OrderItemResponseDto> orderList = new ArrayList<>();
 	private int totalPrice;
 
-	public void addItem(OrderMenuResponseDto orderDto) {
+	public void addItem(OrderItemResponseDto orderDto) {
 		this.orderList.add(orderDto);
 	}
 
