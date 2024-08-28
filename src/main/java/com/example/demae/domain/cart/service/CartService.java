@@ -69,33 +69,33 @@ public class CartService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<CartAllResponseDto> getAllOrderInfo(String userEmail) {
+	public List<CartAllResponseDto> getAllCartInfo(String userEmail) {
 		User user = userService.findUser(userEmail);
 		List<Cart> orderList = cartRepository.findByUser_UserId(user.getUserId());
 		return orderList.stream().map(CartAllResponseDto::new).toList();
 	}
 
 	@Transactional(readOnly = true)
-	public OrderResponseDto getCartOne(Long cartId, String userEmail) {
+	public OrderResponseDto getCart(Long cartId, String userEmail) {
 		User user = userService.findUser(userEmail);
-		Cart findOrder = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("카트가 없습니다."));
-		if (user.getStore() != null && user.getStore().getStoreId().equals(findOrder.getOrderItems().get(0).getStore().getStoreId()))  {
-			List<OrderItem> orderList = orderItemRepository.findByCart_CartId(cartId);
+		Cart cart = findCart(cartId);
+		if (user.getStore() != null && user.getStore().getStoreId().equals(cart.getOrderItems().get(0).getStore().getStoreId()))  {
+			List<OrderItem> orderItems = orderItemRepository.findByCart_CartId(cartId);
 
 			OrderResponseDto orderResponseDto = new OrderResponseDto();
-			for (OrderItem orderItem : orderList) {
-				OrderMenuResponseDto menuDto = new OrderMenuResponseDto(orderItem);
-				orderResponseDto.addItem(menuDto);
+			for (OrderItem orderItem : orderItems) {
+				OrderItemResponseDto orderItem1 = new OrderItemResponseDto(orderItem);
+				orderResponseDto.addItem(orderItem1);
 				orderResponseDto.addToTotalPrice(orderItem.getPrice() * orderItem.getQuantity());
 			}
 			return orderResponseDto;
 		}
-		throw new IllegalStateException("본인 가게 정보만 조회가 가능합니다.");
+		throw new IllegalStateException("본인 리뷰만 조회가 가능합니다.");
 	}
 
 
 	@Transactional(readOnly = true)
-	public CartListResponseDto getCart(Long userId) {
+	public CartListResponseDto getCarts(Long userId) {
 		Cart cart = cartRepository.findByUser_UserIdAndCartState(userId, CartState.READY);
 		List<OrderItem> orderItems = cart.getOrderItems();
 		CartListResponseDto cartResponseDto = new CartListResponseDto();

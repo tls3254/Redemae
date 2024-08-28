@@ -27,33 +27,39 @@ public class CartControllerPage {
 	private final SseService sseService;
 
 	@GetMapping
-	public String getAllOrder(@AuthenticationPrincipal UserDetails userDetails,
+	public String getAllCart(@AuthenticationPrincipal UserDetails userDetails,
 							  Model model) {
 		if(userDetails == null){
 			return "root/error";
 		}
 		User user = userService.findUser(userDetails.getUsername());
-		List<CartAllResponseDto> cart = cartService.getAllOrderInfo(userDetails.getUsername());
+		List<CartAllResponseDto> cart = cartService.getAllCartInfo(userDetails.getUsername());
 		model.addAttribute("cart", cart);
 		model.addAttribute("user", user);
-		return "order/orderAllInfoPage";
+		return "cart/orderAllInfoPage";
 	}
 
 	@GetMapping("/orderItem")
-	public String getOrder(@AuthenticationPrincipal UserDetails userDetails,
+	public String getCart(@AuthenticationPrincipal UserDetails userDetails,
 						   Model model) {
+		if(userDetails == null){
+			return "root/error";
+		}
 		User user = userService.findUser(userDetails.getUsername());
-		CartListResponseDto cart = cartService.getCart(user.getUserId());
+		CartListResponseDto cart = cartService.getCarts(user.getUserId());
 		model.addAttribute("cartList", cart);
-		return "order/cart";
+		return "cart/cart";
 	}
 
 	@GetMapping("/{cartId}")
 	public String getOrder(@PathVariable Long cartId,
 						   @AuthenticationPrincipal UserDetails userDetails,
 						   Model model) {
-		OrderResponseDto cart = cartService.getCartOne(cartId, userDetails.getUsername());
+		if(userDetails == null){
+			return "root/error";
+		}
+		OrderResponseDto cart = cartService.getCart(cartId, userDetails.getUsername());
 		model.addAttribute("cart", cart);
-		return "order/orderInfoPage";
+		return "cart/orderInfoPage";
 	}
 }
