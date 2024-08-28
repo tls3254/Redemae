@@ -29,12 +29,13 @@ public class CartControllerPage {
 	@GetMapping
 	public String getAllOrder(@AuthenticationPrincipal UserDetails userDetails,
 							  Model model) {
+		if(userDetails == null){
+			return "root/error";
+		}
 		User user = userService.findUser(userDetails.getUsername());
 		List<CartAllResponseDto> cart = cartService.getAllOrderInfo(userDetails.getUsername());
 		model.addAttribute("cart", cart);
-		if(user.getUserRole().toString().equals("USER")) {
-			return "order/orderAllInfoPageUser";
-		}
+		model.addAttribute("user", user);
 		return "order/orderAllInfoPage";
 	}
 

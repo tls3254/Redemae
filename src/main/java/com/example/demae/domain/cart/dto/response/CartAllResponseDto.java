@@ -15,6 +15,7 @@ public class CartAllResponseDto {
 	private LocalDateTime date;
 	private CartState state;
 	private int totalPrice;
+	private String storeName;
 
 	public CartAllResponseDto(Cart cart) {
 		this.cartId = cart.getCartId();
@@ -22,5 +23,6 @@ public class CartAllResponseDto {
 		this.date = cart.getModifiedAt();
 		this.state = cart.getCartState();
 		this.totalPrice = cart.getTotalPrice();
+		this.storeName = cart.getOrderItems().get(0).getStore().getStoreName();
 	}
 }

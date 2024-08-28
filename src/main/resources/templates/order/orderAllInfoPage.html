@@ -1,114 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Show Menu</title>
-  <script src="/js/common-sse.js"></script>
-  <script src="/js/common-sse.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        table {
-            border-spacing: 0;
-            width: 80%;
-            margin: 20px 0; /* 위아래 여백을 조절하세요 */
-        }
-
-        h1 {
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        table {
-            border-spacing: 0;
-            width: 100%;
-            margin-bottom: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #007bff;
-            color: #ffffff;
-        }
-
-        tbody tr:hover {
-            background-color: #f2f2f2;
-        }
-
-        .btn-action {
-            margin-right: 10px;
-        }
-
-        .order-details-btn, .confirm-btn, .complete-btn {
-            padding: 5px 10px;
-            color: #ffffff; /* 버튼의 글자색을 흰색으로 설정하세요 */
-            border: none;
-            cursor: pointer;
-        }
-
-        .order-details-btn {
-            background-color: #007bff;
-        }
-
-        .confirm-btn, .complete-btn {
-            background-color: #28a745;
-        }
-
-        .complete-btn {
-            background-color: #6c757d;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>주문 페이지</title>
+<!--  <script src="/js/common-sse.js"></script>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/cart.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
-<h1>Order</h1>
-<div th:if="${not #lists.isEmpty(orderAll)}">
-  <table>
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>USER</th>
-      <th>ORDER DATE</th>
-      <th>ORDER Details</th>
-      <th>ORDER STATE</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="menuDto : ${orderAll}">
-      <td th:text="${menuDto.storeName}"></td>
-      <td th:text="${menuDto.userId}"></td>
-      <td th:text="${menuDto.date}"></td>
-      <td>
-        <!-- 상세정보보기 버튼 -->
-        <button type="button" class="btn btn-primary" th:attr="onclick='redirectToOrderDetails(\'' + ${menuDto.id} + '\')'">
-          주문 상세정보
-        </button>
-      </td>
-      <td>
- <span th:if="${#strings.equals(menuDto.state, 'READY')}">
-    <button type="button" th:onclick="'confirmOrderWithSSE(\'' + ${menuDto.id} + '\')'" class="btn btn-primary">주문확인 하기</button>
-</span>
-        <span th:if="${#strings.equals(menuDto.state, 'CONFIRM')}">
-    <button type="button" th:onclick="'confirmOrderWithSSE(\'' + ${menuDto.id} + '\')'" class="btn btn-primary">배달완료 하기</button>
-</span>
-        <span th:unless="${#strings.equals(menuDto.state, 'READY') or #strings.equals(menuDto.state, 'CONFIRM')}">
-    <span th:text="${menuDto.state}"></span>
-</span>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<h1>주문</h1>
+<div th:if="${not #lists.isEmpty(cart)}">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>USER</th>
+                <th>ORDER DATE</th>
+                <th th:if="${user.userRole.toString() == 'ADMIN'}">ORDER Details</th>
+                <th th:if="${user.userRole.toString() == 'ADMIN'}">ORDER STATE</th>
+                <th th:if="${user.userRole.toString() == 'USER'}">info</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cart : ${cart}">
+                <td th:text="${cart.storeName}"></td>
+                <td th:text="${cart.userId}"></td>
+                <td th:text="${cart.date}"></td>
+                <td th:if="${user.userRole.toString() == 'ADMIN'}">
+                <button type="button" class="btn btn-primary" th:attr="onclick='redirectToOrderDetails(\'' + ${cart.cartId} + '\')'">주문 상세정보</button>
+                </td>
+                <td th:if="${user.userRole.toString() == 'ADMIN'}">
+                    <span th:if="${#strings.equals(cart.state, 'READY')}">
+                        <button type="button" th:onclick="'confirmOrderWithSSE(\'' + ${cart.cartId} + '\')'" class="btn btn-primary">주문확인 하기</button>
+                    </span>
+                    <span th:if="${#strings.equals(cart.state, 'CONFIRM')}">
+                        <button type="button" th:onclick="'confirmOrderWithSSE(\'' + ${cart.cartId} + '\')'" class="btn btn-primary">배달완료 하기</button>
+                    </span>
+                    <span th:unless="${#strings.equals(cart.state, 'READY') or #strings.equals(cart.state, 'CONFIRM')}">
+                        <span th:text="${cart.state}"></span>
+                    </span>
+                </td>
+                <td th:if="${user.userRole.toString() == 'USER'}">
+                    <a class="btn btn-info store-link" th:href="@{/carts/{cartId}/reviews(cartId=${cart.cartId})}">리뷰 정보 보기</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
 <a th:href="@{'/'}" class="btn btn-primary">메인 페이지</a>
-<div th:if="${#lists.isEmpty(orderAll)}">
-  <p>No menus available in the Cart.</p>
-</div>
+
 <script th:inline="javascript">
   function redirectToOrderDetails(orderId) {
     var url = '/api/orders/' + orderId;
