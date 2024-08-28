@@ -26,7 +26,7 @@
             <td th:text="${menu.menuPrice}" id="priceAndQ" th:data-price="${menu.menuPrice}" th:data-quantity="1"></td>
             <td id="storeAndMenu" th:data-store-id="${storeId}" th:data-menu-id="${menu.menuId}">
                 <a class="btn btn-info store-link" onclick="addCart()">메뉴 담기</a>
-                <a th:if="${user.userRole.toString() == 'ADMIN' and storeId == user.store.storeId}" class="btn btn-info store-link"
+                <a th:if="${user != null and user.userRole.toString() == 'ADMIN' and storeId == user.store.storeId}" class="btn btn-info store-link"
                    th:href="@{/stores/{storeId}/menus/{menuId}(storeId=${menu.storeId}, menuId=${menu.menuId})}">메뉴 정보 보기</a>
             </td>
         </tr>
@@ -34,9 +34,9 @@
     </table>
 </div>
 
-<a th:if="${user.userRole.toString() == 'ADMIN' and menuList[0].storeId == user.store.storeId or storeId == user.store.storeId}"
-   th:href="@{'/stores/' + ${storeId} + '/menus/join'}" class="btn btn-primary">메뉴 생성 페이지</a>
-<a type="button" class="btn btn-info" href="/carts">장바구니</a>
+<a th:if="${user != null and menuList != null and user.userRole.toString() == 'ADMIN' and (menuList[0].storeId == user.store.storeId or storeId == user.store.storeId)}"
+   th:href="@{/stores/{storeId}/menus/join(storeId=${storeId})}" class="btn btn-primary">메뉴 생성 페이지</a>
+<a class="btn btn-info" href="/carts">장바구니</a>
 <a th:href="@{'/api/stores'}" class="btn btn-primary">상점 페이지</a>
 <a th:href="@{'/'}" class="btn btn-primary">메인 페이지</a>
 </body>
