@@ -21,6 +21,7 @@
                 <th th:if="${user.userRole.toString() == 'ADMIN'}">ORDER Details</th>
                 <th th:if="${user.userRole.toString() == 'ADMIN'}">ORDER STATE</th>
                 <th th:if="${user.userRole.toString() == 'USER'}">info</th>
+                <th th:if="${user.userRole.toString() == 'USER'}">review</th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +42,9 @@
                     <span th:unless="${#strings.equals(cart.state, 'READY') or #strings.equals(cart.state, 'CONFIRM')}">
                         <span th:text="${cart.state}"></span>
                     </span>
+                </td>
+                <td th:if="${user.userRole.toString() == 'USER'}">
+                    <a class="btn btn-info store-link" th:href="@{/carts/{cartId}(cartId=${cart.cartId})}">카트 정보</a>
                 </td>
                 <td th:if="${user.userRole.toString() == 'USER'}">
                     <a class="btn btn-info store-link" th:href="@{/carts/{cartId}/reviews(cartId=${cart.cartId})}">리뷰 정보 보기</a>

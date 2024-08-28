@@ -79,18 +79,18 @@ public class CartService {
 	public OrderResponseDto getCart(Long cartId, String userEmail) {
 		User user = userService.findUser(userEmail);
 		Cart cart = findCart(cartId);
-		if (user.getStore() != null && user.getStore().getStoreId().equals(cart.getOrderItems().get(0).getStore().getStoreId()))  {
-			List<OrderItem> orderItems = orderItemRepository.findByCart_CartId(cartId);
+//		if (!user.getStore().getStoreId().equals(cart.getOrderItems().get(0).getStore().getStoreId())) {
+//			throw new IllegalStateException("본인 리뷰만 조회가 가능합니다.");
+//		}
+		List<OrderItem> orderItems = orderItemRepository.findByCart_CartId(cartId);
 
-			OrderResponseDto orderResponseDto = new OrderResponseDto();
-			for (OrderItem orderItem : orderItems) {
-				OrderItemResponseDto orderItem1 = new OrderItemResponseDto(orderItem);
-				orderResponseDto.addItem(orderItem1);
-				orderResponseDto.addToTotalPrice(orderItem.getPrice() * orderItem.getQuantity());
-			}
-			return orderResponseDto;
+		OrderResponseDto orderResponseDto = new OrderResponseDto();
+		for (OrderItem orderItem : orderItems) {
+			OrderItemResponseDto orderItem1 = new OrderItemResponseDto(orderItem);
+			orderResponseDto.addItem(orderItem1);
+			orderResponseDto.addToTotalPrice(orderItem.getPrice() * orderItem.getQuantity());
 		}
-		throw new IllegalStateException("본인 리뷰만 조회가 가능합니다.");
+		return orderResponseDto;
 	}
 
 
