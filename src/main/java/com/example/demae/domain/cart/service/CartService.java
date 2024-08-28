@@ -98,7 +98,7 @@ public class CartService {
 	public CartListResponseDto getCarts(Long userId) {
 		Cart cart = cartRepository.findByUser_UserIdAndCartState(userId, CartState.READY);
 		List<OrderItem> orderItems = cart.getOrderItems();
-		CartListResponseDto cartResponseDto = new CartListResponseDto();
+		CartListResponseDto cartResponseDto = new CartListResponseDto(cart.getCartId());
 		Long userIdFromCart = cart.getUser().getUserId();
 
 		for (OrderItem orderItem : orderItems) {
