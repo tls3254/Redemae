@@ -103,7 +103,7 @@ public class CartService {
 
 		for (OrderItem orderItem : orderItems) {
 			Menu menu = orderItem.getMenu();
-			CartResponseDto menuDto = new CartResponseDto(menu, orderItem.getPrice(), userIdFromCart);
+			CartResponseDto menuDto = new CartResponseDto(menu, orderItem.getPrice(), orderItem.getQuantity(), userIdFromCart);
 			cartResponseDto.addItem(menuDto);
 			cartResponseDto.addToTotalPrice(orderItem.getPrice() * orderItem.getQuantity());
 		}

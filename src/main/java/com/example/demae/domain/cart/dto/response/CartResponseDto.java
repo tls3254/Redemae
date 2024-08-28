@@ -14,10 +14,10 @@ public class CartResponseDto {
 	private Long storeId;
 	private Long userId;
 
-	public CartResponseDto(Menu menu, int quantity,Long userId){
+	public CartResponseDto(Menu menu, int price, int quantity, Long userId){
 		this.id = menu.getMenuId();
 		this.name =menu.getMenuName();
-		this.price = menu.getMenuPrice();
+		this.price = price;
 		this.storeId = menu.getStore().getStoreId();
 		this.quantity = quantity;
 		this.userId =userId;
