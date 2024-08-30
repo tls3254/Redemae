@@ -1,10 +1,20 @@
-const eventSource = new EventSource("/api/sse/connect");
+// const eventSource = new EventSource("/api/sse/connect");
+//
+// eventSource.onmessage = function (event) {
+// 	const data = JSON.parse(event.data);
+// 	console.log(data.message);
+// 	alert(data.message);
+// 	// window.location.href ="/carts"
+// };
+// console.log("EventSource created successfully.");
+document.addEventListener('DOMContentLoaded', function() {
+	const eventSource = new EventSource("/api/sse/connect");
 
-eventSource.onmessage = function (event) {
-	const notification = JSON.stringify(event.data);
-	console.log(notification.message)
-	alert(notification)
-	window.location.href ="/api/orders"
-};
+	eventSource.onmessage = function (event) {
+		const data = JSON.parse(event.data);
+		console.log(data.message);
+		alert(data.message);
+	};
 
-console.log("EventSource created successfully.");
+	console.log("EventSource created successfully.");
+});

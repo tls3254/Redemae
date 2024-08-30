@@ -21,16 +21,16 @@ public class SseService {
 
 	public SseEmitter createConnect(String username) {
 		User user = userService.findUser(username);
-		String id = String.valueOf(user.getUserId());
-		if(userEmitters.containsKey(String.valueOf(id))) {
-			SseEmitter sseEmitter = userEmitters.get(id);
-			userEmitters.remove(sseEmitter);
+		String userId = String.valueOf(user.getUserId());
+
+		if(userEmitters.containsKey(String.valueOf(userId))) {
+			userEmitters.remove(userId);
 		}
 
 		SseEmitter emitter = new SseEmitter(DEFAULT_TIMEOUT);
-		userEmitters.put(id, emitter);
-		emitter.onCompletion(() -> userEmitters.remove(id, emitter));
-		emitter.onTimeout(() -> userEmitters.remove(id, emitter));
+		userEmitters.put(userId, emitter);
+		emitter.onCompletion(() -> userEmitters.remove(userId, emitter));
+		emitter.onTimeout(() -> userEmitters.remove(userId, emitter));
 
 		return emitter;
 	}
@@ -44,7 +44,7 @@ public class SseService {
 	}
 
 	public List<SseEmitter> findUserAndStore(Cart cart){
-		String userId = String.valueOf(cart.getUser().getUserId()); // 주문을 한 유저의 고유 ID
+		String userId = String.valueOf(cart.getUser().getUserId());
 		String storeUserId = String.valueOf(cart.getOrderItems().get(0).getStore().getUser().getUserId());
 		SseEmitter userEmitter = getUserEmitters(userId);
 		SseEmitter storeEmitter = getUserEmitters(storeUserId);
