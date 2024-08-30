@@ -24,13 +24,13 @@ public class CartController {
 		return ResponseEntity.ok("ok");
 	}
 
-//	@DeleteMapping("/value/{cartId}")
-//	public ResponseEntity<String> deleteOrderItem(@PathVariable Long cartId,
-//												 @RequestBody DeleteCartRequestDto cartRequestDto,
-//										         @AuthenticationPrincipal UserDetails userDetails) {
-//		cartService.deleteOrderItem(cartId, cartRequestDto, userDetails.getUsername());
-//		return ResponseEntity.ok("ok");
-//	}
+	@PostMapping("/value/{cartId}")
+	public ResponseEntity<String> confirmOrderItem(@PathVariable Long cartId,
+												 @RequestBody DeleteCartRequestDto cartRequestDto,
+										         @AuthenticationPrincipal UserDetails userDetails) {
+		cartService.confirmOrderItem(cartId, cartRequestDto, userDetails.getUsername());
+		return ResponseEntity.ok("ok");
+	}
 
 	@DeleteMapping("/{cartId}")
 	public ResponseEntity<String> deleteCart(@PathVariable Long cartId,

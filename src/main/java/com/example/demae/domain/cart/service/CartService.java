@@ -1,6 +1,7 @@
 package com.example.demae.domain.cart.service;
 
 import com.example.demae.domain.cart.dto.request.CreateCartRequestDto;
+import com.example.demae.domain.cart.dto.request.DeleteCartRequestDto;
 import com.example.demae.domain.cart.dto.response.*;
 import com.example.demae.domain.cart.entity.Cart;
 import com.example.demae.domain.cart.entity.CartState;
@@ -48,17 +49,15 @@ public class CartService {
 		cart.addTotalPrice(orderRequestDto.getOrderItemPrice() * orderRequestDto.getOrderItemQuantity());
 	}
 
-//	public void deleteOrderItem(Long cartId, DeleteCartRequestDto cartRequestDto, String userEmail) {
-//		User user = userService.findUser(userEmail);
-//
-//		Cart cart = findCart(cartId);
-//
-//		OrderItem orderItem = orderItemRepository.findByCart_CartIdAndOrderItemId(cartId, cartRequestDto.getOrderItemId());
-//
-////		Cart cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.READY);
-////		CartState cartState = CartState.valueOf(cartRequestDto.getCartState().toUpperCase());
-////		cart.updateCartState(cartState);
-//	}
+	public void confirmOrderItem(Long cartId, DeleteCartRequestDto cartRequestDto, String userEmail) {
+		User user = userService.findUser(userEmail);
+		Cart cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.READY);
+		if(cart == null){
+			cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.CONFIRM);
+		}
+		CartState cartState = CartState.valueOf(cartRequestDto.getCartState().toUpperCase());
+		cart.updateCartState(cartState);
+	}
 
 	public void deleteCart(Long cartId, String userEmail) {
 		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("장바구니가 없습니다."));
@@ -126,8 +125,8 @@ public class CartService {
 
 	public Cart completeOrder(Long cartId, String userEmail) {
 		User user = userService.findUser(userEmail);
-		Cart findOrder = cartRepository.findById(cartId).orElseThrow();
-		if (user.getStore() != null && user.getStore().getStoreId().equals(findOrder.getOrderItems().get(0).getStore().getStoreId()))  {
+		Cart cart = findCart(cartId);
+		if (user.getStore() != null && user.getStore().getStoreId().equals(cart.getOrderItems().get(0).getStore().getStoreId()))  {
 			return cartRepository.findById(cartId).orElseThrow();
 		}
 		return null;
