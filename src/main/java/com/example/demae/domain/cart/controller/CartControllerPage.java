@@ -4,6 +4,7 @@ import com.example.demae.domain.cart.dto.response.CartListResponseDto;
 import com.example.demae.domain.cart.dto.response.CartAllResponseDto;
 import com.example.demae.domain.cart.dto.response.OrderResponseDto;
 import com.example.demae.domain.user.entity.User;
+import com.example.demae.domain.user.entity.UserRoleEnum;
 import com.example.demae.domain.user.service.UserService;
 import com.example.demae.domain.cart.service.CartService;
 import com.example.demae.domain.sse.service.SseService;
@@ -33,7 +34,13 @@ public class CartControllerPage {
 			return "root/error";
 		}
 		User user = userService.findUser(userDetails.getUsername());
-		List<CartAllResponseDto> cart = cartService.getAllCartInfo(userDetails.getUsername());
+		List<CartAllResponseDto> cart;
+		if(user.getUserRole() == UserRoleEnum.ADMIN){
+			cart = cartService.getAllCart(user.getStore().getStoreId());
+		}
+		else{
+			cart = cartService.getAllCartInfo(userDetails.getUsername());
+		}
 		model.addAttribute("cart", cart);
 		model.addAttribute("user", user);
 		return "cart/orderAllInfoPage";

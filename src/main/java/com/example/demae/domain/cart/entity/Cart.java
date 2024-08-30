@@ -1,5 +1,6 @@
 package com.example.demae.domain.cart.entity;
 
+import com.example.demae.domain.store.entity.Store;
 import com.example.demae.domain.user.entity.User;
 import com.example.demae.domain.review.entity.Review;
 import com.example.demae.global.audit.Auditable;
@@ -31,6 +32,10 @@ public class Cart extends Auditable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -39,8 +44,9 @@ public class Cart extends Auditable {
     @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
-    public Cart(User user) {
+    public Cart(User user, Store store) {
         this.user = user;
+        this.store = store;
     }
 
     public Cart(User user, int count) {

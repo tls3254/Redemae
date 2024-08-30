@@ -13,6 +13,7 @@ import com.example.demae.domain.menu.service.MenuService;
 import com.example.demae.domain.store.entity.Store;
 import com.example.demae.domain.store.service.StoreService;
 import com.example.demae.domain.user.entity.User;
+import com.example.demae.domain.user.entity.UserRoleEnum;
 import com.example.demae.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,15 +34,15 @@ public class CartService {
 
 	public void createCartAndOrderItem(CreateCartRequestDto orderRequestDto, String userEmail) {
 		User user = userService.findUser(userEmail);
+		Store store = storeService.findStore(orderRequestDto.getStoreId());
 
 		Cart cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.READY);
 
 		if (cart == null) {
-			cart = new Cart(user);
+			cart = new Cart(user, store);
 			cartRepository.save(cart);
 		}
 
-		Store store = storeService.findStore(orderRequestDto.getStoreId());
 		Menu menu = menuService.findMenu(orderRequestDto.getMenuId());
 		OrderItem orderItem = new OrderItem(orderRequestDto.getOrderItemPrice(), orderRequestDto.getOrderItemQuantity(), store, menu, cart);
 		orderItemRepository.save(orderItem);
@@ -51,9 +52,19 @@ public class CartService {
 
 	public void confirmOrderItem(Long cartId, DeleteCartRequestDto cartRequestDto, String userEmail) {
 		User user = userService.findUser(userEmail);
-		Cart cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.READY);
-		if(cart == null){
-			cart = cartRepository.findByUser_UserIdAndCartState(user.getUserId(), CartState.CONFIRM);
+		Cart cart = findCart(cartId);
+		if(user.getUserRole().toString().equals("ADMIN")){
+			if (!cart.getStore().getStoreId().equals(user.getStore().getStoreId())) {
+				throw new RuntimeException("사용자 권한이 없습니다.");
+			}
+		}
+		else {
+			if (!cart.getUser().getUserId().equals(user.getUserId())) {
+				throw new RuntimeException("사용자 권한이 없습니다.");
+			}
+		}
+		if (cart.getCartState() != CartState.READY && cart.getCartState() != CartState.CONFIRM) {
+			throw new RuntimeException("상태 변경이 불가능한 카트입니다.");
 		}
 		CartState cartState = CartState.valueOf(cartRequestDto.getCartState().toUpperCase());
 		cart.updateCartState(cartState);
@@ -71,6 +82,12 @@ public class CartService {
 	public List<CartAllResponseDto> getAllCartInfo(String userEmail) {
 		User user = userService.findUser(userEmail);
 		List<Cart> orderList = cartRepository.findByUser_UserId(user.getUserId());
+		return orderList.stream().map(CartAllResponseDto::new).toList();
+	}
+
+	@Transactional(readOnly = true)
+	public List<CartAllResponseDto> getAllCart(Long storeId) {
+		List<Cart> orderList = cartRepository.findByStore_StoreId(storeId); // 가게 ID로 카트 조회
 		return orderList.stream().map(CartAllResponseDto::new).toList();
 	}
 

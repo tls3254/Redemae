@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>주문 페이지</title>
-<!--  <script src="/js/common-sse.js"></script>-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/cart.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/common-sse.js"></script>
 </head>
 <body>
 
@@ -22,6 +23,7 @@
                 <th th:if="${user.userRole.toString() == 'ADMIN'}">ORDER STATE</th>
                 <th th:if="${user.userRole.toString() == 'USER'}">info</th>
                 <th th:if="${user.userRole.toString() == 'USER'}">review</th>
+                <th th:if="${user.userRole.toString() == 'USER'}">USER STATE</th>
             </tr>
         </thead>
         <tbody>
@@ -30,14 +32,14 @@
                 <td th:text="${cart.userId}"></td>
                 <td th:text="${cart.date}"></td>
                 <td th:if="${user.userRole.toString() == 'ADMIN'}">
-                <button type="button" class="btn btn-primary" th:attr="onclick='redirectToOrderDetails(\'' + ${cart.cartId} + '\')'">주문 상세정보</button>
+                <button type="button" class="btn btn-primary" id="cart" th:data-cart-id="${cart.cartId}" onclick="CartDetails()">주문 상세정보</button>
                 </td>
                 <td th:if="${user.userRole.toString() == 'ADMIN'}">
                     <span th:if="${#strings.equals(cart.state, 'READY')}">
-                        <button type="button" th:onclick="'confirmOrderWithSSE(\'' + ${cart.cartId} + '\')'" class="btn btn-primary">주문확인 하기</button>
+                        <button type="button" class="btn btn-primary" onclick="confirmOrderWithSSE('CONFIRM')">주문확인 하기</button>
                     </span>
                     <span th:if="${#strings.equals(cart.state, 'CONFIRM')}">
-                        <button type="button" th:onclick="'confirmOrderWithSSE(\'' + ${cart.cartId} + '\')'" class="btn btn-primary">배달완료 하기</button>
+                        <button type="button" class="btn btn-primary" onclick="confirmOrderWithSSE('COMPLETE')">배달완료 하기</button>
                     </span>
                     <span th:unless="${#strings.equals(cart.state, 'READY') or #strings.equals(cart.state, 'CONFIRM')}">
                         <span th:text="${cart.state}"></span>
@@ -49,68 +51,13 @@
                 <td th:if="${user.userRole.toString() == 'USER'}">
                     <a class="btn btn-info store-link" th:href="@{/carts/{cartId}/reviews(cartId=${cart.cartId})}">리뷰 정보 보기</a>
                 </td>
+                <td><span th:if="${user.userRole.toString() == 'USER'}" th:text="${cart.state}"></span></td>
             </tr>
         </tbody>
     </table>
 </div>
 
 <a th:href="@{'/'}" class="btn btn-primary">메인 페이지</a>
-
-<script th:inline="javascript">
-  function redirectToOrderDetails(orderId) {
-    var url = '/api/orders/' + orderId;
-    window.location.href = url;
-  }
-</script>
-
-<script th:inline="javascript">
-    async function confirmOrderWithSSE(orderId) {
-        const url = 'https://b26yyhck34.execute-api.ap-northeast-2.amazonaws.com/connect/';
-        const jwtToken = document.cookie;
-
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                credentials: "same-origin",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization" : jwtToken
-                },
-                body:JSON.stringify({
-                    "orderId":orderId
-                })
-            });
-
-            if (response.ok) {
-                console.log('서버 응답이 성공했습니다.');
-                alert("서버 응답 성공")
-                setupSSE(orderId)
-                // 실제 내용은 response.body 등을 통해 접근할 수 없음
-            } else {
-                console.error('서버 응답이 실패했습니다. 응답 상태 코드:', response.status);
-            }
-
-            // 추가 작업 수행
-        } catch (error) {
-            console.error('Fetch 요청 중 에러가 발생했습니다.', error);
-        }
-
-        // SSE 연결을 설정하는 함수
-        function setupSSE(orderId) {
-            const eventSource = new EventSource('/api/sse/'+ orderId);
-            eventSource.onmessage = function (event) {
-                alert("주문이 완료되었습니다")
-                location.reload();
-            };
-            eventSource.onerror = function (error) {
-                console.error('EventSource failed:', error);
-            };
-        }
-    }
-
-</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

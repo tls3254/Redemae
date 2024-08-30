@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>주문 페이지</title>
-<!--  <script src="/js/common-sse.js"></script>-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/cartOne.css">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="/js/cart.js"></script>
+  <script src="/js/common-sse.js"></script>
 </head>
 <body>
 
@@ -35,56 +35,9 @@
   <p>Total Price: <span th:text="${cartList.totalPrice}"></span></p>
 </div>
 
-<a class="btn btn-primary" onclick="createOrder()" style="display: inline-block;">장바구니 상품 주문하기</a>
+<a class="btn btn-primary" onclick="setupSse()" style="display: inline-block;">장바구니 상품 주문하기</a>
 <a class="btn btn-primary" onclick="deleteCart()" style="display: inline-block;">장바구니 삭제</a>
 <a th:href="@{'/'}" class="btn btn-primary">메인 페이지</a>
-
-
-<script>
-  // 주문 버튼을 눌렀을 때의 이벤트 처리
-  function createOrder() {
-    // 주문 처리 AJAX 요청
-    // (이 부분은 실제 주문 처리 로직 및 주문자의 고유 ID를 서버로 전달하는 로직이 들어갑니다.)
-
-    var orderRequest = {
-      cartList: cartList,
-      totalPrice: totalPrice
-    };
-
-    $.ajax({
-      type: 'POST',
-      url: '/api/orders',
-      contentType: 'application/json',
-      data: JSON.stringify(orderRequest), // menuDto 속성들을 직렬화하여 전송
-      success: function (response) {
-        alert('주문이 완료되었습니다.');
-        var orderId = response;
-        console.log(orderId)
-        setupAjax(orderId)
-        location.href
-      },
-      error: function (error) {
-        console.error(error);
-      }
-    });
-  }
-
-  // SSE 연결을 설정하는 함수
-  function setupAjax(orderId) {
-    $.ajax({
-      type: "GET",
-      url: '/api/sse/user/' + orderId,
-      success: function (data) {
-        // 성공 시 처리
-        // data에는 서버에서 받은 데이터가 들어있습니다.
-      },
-      error: function (error) {
-        // 에러 시 처리
-        console.error('Error:', error);
-      }
-    });
-  }
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
